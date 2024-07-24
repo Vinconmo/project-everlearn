@@ -1,6 +1,4 @@
-export const todosController = {};
-
-todosController.postTodo = (ctx) => {
+const postTodo = async (ctx) => {
   try {
     ctx.status = 201;
     ctx.body;
@@ -13,7 +11,7 @@ todosController.postTodo = (ctx) => {
   }
 }
 
-todosController.updateTodo = (ctx) => {
+const updateTodo = async (ctx) => {
   try {
     const {goalId, todoId} = ctx.params;
     ctx.status = 200;
@@ -27,7 +25,7 @@ todosController.updateTodo = (ctx) => {
   }
 }
 
-todosController.deleteTodo = (ctx) => {
+const deleteTodo = async (ctx) => {
   try {
     const {goalId, todoId} = ctx.params;
     ctx.status = 200;
@@ -39,4 +37,10 @@ todosController.deleteTodo = (ctx) => {
     })
     console.log(`Error in Todos/deleteTodo: ${error}`)
   }
+}
+
+module.exports = {
+  postTodo,
+  updateTodo,
+  deleteTodo,
 }

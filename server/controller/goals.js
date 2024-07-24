@@ -1,6 +1,4 @@
-export const goalsController = {};
-
-goalsController.getAll = (ctx) => {
+const getAll = async (ctx) => {
   try {
     ctx.status = 200;
     ctx.body;
@@ -13,7 +11,7 @@ goalsController.getAll = (ctx) => {
   }
 }
 
-goalsController.postGoal = (ctx) => {
+const postGoal = async (ctx) => {
   try {
     ctx.status = 201;
     ctx.body;
@@ -26,7 +24,7 @@ goalsController.postGoal = (ctx) => {
   }
 }
 
-goalsController.updateGoal = (ctx) => {
+const updateGoal = async (ctx) => {
   try {
     const {goalId} = ctx.params;
     ctx.status = 200;
@@ -40,7 +38,7 @@ goalsController.updateGoal = (ctx) => {
   }
 }
 
-goalsController.deleteGoal = (ctx) => {
+const deleteGoal = async (ctx) => {
   try {
     const {goalId} = ctx.params;
     ctx.status = 200;
@@ -52,4 +50,11 @@ goalsController.deleteGoal = (ctx) => {
     })
     console.log(`Error in goals/deleteGoal: ${error}`)
   }
+}
+
+module.exports = {
+  getAll,
+  postGoal,
+  updateGoal,
+  deleteGoal
 }
