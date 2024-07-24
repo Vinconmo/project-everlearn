@@ -1,3 +1,5 @@
+'use strict';
+
 const postTodo = async (ctx) => {
   try {
     ctx.status = 201;

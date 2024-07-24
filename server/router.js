@@ -1,3 +1,5 @@
+'use strict';
+
 const router = require('@koa/router')();
 const goalsController = require('./controller/goals');
 const todosController = require('./controller/todos');

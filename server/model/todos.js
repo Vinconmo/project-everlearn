@@ -1,9 +1,10 @@
-const {sequelize} = require('../db');
-const {DataTypes} = require('sequelize');
+'use strict';
+
+const {DataTypes} = require('sequelize')
 
 // export as function for model to be called by db
-module.exports = () => {
-  const Todo = sequelize.define('todo', {
+module.exports = (sequelize) => {
+  const Todo = sequelize.define('Todo', {
     // id auto generated
     titleTodo: {
       type: DataTypes.STRING,
@@ -28,6 +29,6 @@ module.exports = () => {
     }
   })
   // creates table relation to goal table
-  Todo.associate = db => db.todo.belongsTo(db.goal)
+  Todo.associate = db => db.Todo.belongsTo(db.Goal)
   return Todo;
 }

@@ -1,12 +1,17 @@
+'use strict';
+
+const db = require('../db');
+
 const getAll = async (ctx) => {
   try {
+    const goals = await db.Goal.findAll({});
     ctx.status = 200;
-    ctx.body;
+    ctx.body = goals;
   } catch (error) {
-    ctx.status(500)
-    ctx.body({
+    ctx.status = 500
+    ctx.body = {
       error, msg: 'Request failed'
-    })
+    }
     console.log(`Error in goals/getAll: ${error}`)
   }
 }

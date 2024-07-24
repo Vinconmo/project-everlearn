@@ -1,9 +1,10 @@
-const {sequelize} = require('../db');
-const {DataTypes} = require('sequelize');
+'use strict';
+
+const {DataTypes} = require('sequelize')
 
 // export as function for model to be called by db
-module.exports = () => {
-  const Goal = sequelize.define('goal', {
+module.exports = (sequelize) => {
+  const Goal = sequelize.define('Goal', {
     // id auto generated
     title: {
       type: DataTypes.STRING,
@@ -18,8 +19,8 @@ module.exports = () => {
       defaultValue: false,
       allowNull: false,
     }
-  })
+  });
   // creates table relation to todo table
-  Goal.associate = db => db.goal.hasMany(db.todo)
+  Goal.associate = db => db.Goal.hasMany(db.Todo)
   return Goal;
 }
