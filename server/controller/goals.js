@@ -23,7 +23,12 @@ const getAll = async (ctx) => {
 const getById = async (ctx) => {
   try {
     const {goalId} = ctx.params;
-    const goal = await db.Goal.findByPk(goalId)
+    const goal = await db.Goal.findOne({
+      where: {id: goalId},
+      include: {
+        model: db.Todo
+      }
+    });
     ctx.status = 200;
     ctx.body = goal;
   } catch (error) {

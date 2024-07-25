@@ -1,4 +1,4 @@
-import { useEffect, useState, FC } from 'react'
+import {useEffect, useState, FC} from 'react'
 import './App.css'
 import {getGoals} from './ApiServices'
 import {Goal} from './Types'
@@ -12,22 +12,22 @@ const App: FC = (): JSX.Element => {
   const [goals, setGoals] = useState<Goal[]>([])
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchGoals = async () => {
       const goals = await getGoals();
       setGoals(goals)
     }
-    fetchData()
+    fetchGoals()
   }, [])
 
   // ^more elegant way?
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Dashboard goals={goals}/>
+      element: <Dashboard goals={goals} />
     },
     {
       path: '/goal/:goalId',
-      element: <GoalDetail/> // ^is there a way to pass variable prop? // helper funct that filters goal by id from router params?
+      element: <GoalDetail /> // ^is there a way to pass variable prop? // helper funct that filters goal by id from router params?
     }
 
   ])

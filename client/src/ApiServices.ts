@@ -33,6 +33,10 @@ export const getGoals = (): Promise<Goal[]> => baseFetch('goal', {
   method: 'GET'
 });
 
+export const getGoalById = (goalId: number): Promise<Goal> => baseFetch(`goal/:${goalId}`, {
+  method: 'GET'
+});
+
 export const postGoal = (goal: Goal): Promise<Goal> => baseFetch('goal', {
   method: 'POST',
   body: JSON.stringify(goal)
