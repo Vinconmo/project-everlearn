@@ -26,7 +26,7 @@ const App: FC = (): JSX.Element => {
       element: <Dashboard goals={goals} />
     },
     {
-      path: '/goal/:goalId',
+      path: 'goal/:goalId',
       element: <GoalDetail /> // ^is there a way to pass variable prop? // helper funct that filters goal by id from router params?
     }
 

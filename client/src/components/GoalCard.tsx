@@ -3,12 +3,14 @@ import {Goal} from "../Types";
 import { BsThreeDots } from "react-icons/bs";
 import {IconContext} from "react-icons";
 import { formatDate } from "../utils/utils";
+import {useNavigate} from "react-router-dom";
 
 interface props {
   goal: Goal
 }
 
 const GoalCard: FC<props> = ({goal}): JSX.Element => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="flex items-center">
@@ -25,7 +27,7 @@ const GoalCard: FC<props> = ({goal}): JSX.Element => {
             <p>{formatDate(goal.dueDate)}</p>
           </div>
         </div>
-        <button className="p2 w-9 h-9 rounded-full bg-[color:var(--highlight-dark-color)]">{'>'}</button>
+        <button onClick={ () => navigate(`/goal/${goal.id}`)} className="p2 w-9 h-9 rounded-full bg-[color:var(--highlight-dark-color)]">{'>'}</button>
       </div>
     </>
   );

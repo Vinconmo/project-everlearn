@@ -33,7 +33,7 @@ export const getGoals = (): Promise<Goal[]> => baseFetch('goal', {
   method: 'GET'
 });
 
-export const getGoalById = (goalId: number): Promise<Goal> => baseFetch(`goal/:${goalId}`, {
+export const getGoalById = (goalId: number): Promise<Goal> => baseFetch(`goal/${goalId}`, {
   method: 'GET'
 });
 
@@ -42,26 +42,26 @@ export const postGoal = (goal: Goal): Promise<Goal> => baseFetch('goal', {
   body: JSON.stringify(goal)
 });
 
-export const updateGoal = (goal: Goal): Promise<Goal> => baseFetch(`goal/:${goal.id}`, {
+export const updateGoal = (goal: Goal): Promise<Goal> => baseFetch(`goal/${goal.id}`, {
   method: 'PUT',
   body: JSON.stringify(goal)
 });
 
-export const deleteGoal = (goal: Goal): Promise<Goal> => baseFetch(`goal/:${goal.id}`, {
+export const deleteGoal = (goal: Goal): Promise<Goal> => baseFetch(`goal/${goal.id}`, {
   method: 'DELETE',
 });
 
 // use todo routes from backend
-export const postTodo = (todo: Todo, goalId: number): Promise<Todo> => baseFetch(`goal/:${goalId}`, {
+export const postTodo = (todo: Todo, goalId: number): Promise<Todo> => baseFetch(`goal/${goalId}`, {
   method: 'POST',
   body: JSON.stringify(todo)
 });
 
-export const updateTodo = (todo: Todo): Promise<Todo> => baseFetch(`goal/todo/:${todo.id}`, {
+export const updateTodo = (todo: Todo): Promise<Todo> => baseFetch(`goal/todo/${todo.id}`, {
   method: 'PUT',
   body: JSON.stringify(todo)
 });
 
-export const deleteTodo = (todo: Todo): Promise<Todo> => baseFetch(`goal/todo/:${todo.id}`, {
+export const deleteTodo = (todo: Todo): Promise<Todo> => baseFetch(`goal/todo/${todo.id}`, {
   method: 'DELETE',
 });
