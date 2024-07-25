@@ -1,29 +1,37 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState, FC } from 'react'
 import './App.css'
 import {getGoals} from './ApiServices'
 import {Goal} from './Types'
 import Navbar from './components/Navbar'
 import Dashboard from './components/Dashboard'
+import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 
-function App() {
-  const [data, setData] = useState<Goal[]>([])
+
+const App: FC = (): JSX.Element => {
+  const [goals, setGoals] = useState<Goal[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
       const goals = await getGoals();
-      setData(goals)
+      setGoals(goals)
     }
     fetchData()
   }, [])
-  console.log(data)
+
+  // ^more elegant way?
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Dashboard goals={goals}/>
+    }
+
+  ])
 
   return (
     <>
-      <div className='flex'>
+      <div className='flex w-full'>
         <Navbar />
-        <Dashboard />
+        <RouterProvider router={router} />
       </div>
     </>
   )

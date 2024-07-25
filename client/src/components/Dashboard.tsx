@@ -1,5 +1,33 @@
-export default function Dashboard() {
+import {FC} from "react";
+import {Goal} from "../Types";
+import GoalItem from "./GoalItem";
+
+interface props {
+  goals: Goal[]
+}
+
+const Dashboard: FC<props> = ({goals}): JSX.Element => {
+  const goalList = goals.map(goal => {
+    return (
+      <GoalItem key={goal.id} goal={goal}/>
+    )
+  })
+
   return (
-    <p>Dashboard works!</p>
+    <>
+      <div className="flex flex-col pt-16 px-10 w-full">
+        <div className="flex mb-5 w-400 items-end">
+          <h1>Welcome back, Vincent! 👋</h1>
+          <button className="ml-auto bg-[color:var(--highlight-light-color)] px-4 py-0.5 rounded-md"><span className="font-semibold mr-3">+</span>New</button>
+        </div>
+        <div className="flex flex-col gap-y-5">
+          {
+            goalList
+          }
+        </div>
+      </div>
+    </>
   );
 }
+
+export default Dashboard
