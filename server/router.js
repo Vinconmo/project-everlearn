@@ -13,8 +13,8 @@ router.delete('/goal/:goalId', goalsController.deleteGoal);
 
 // to-do routes
 router.post('/goal/:goalId', todosController.postTodo);
-router.put('/goal/:goalId/:todoId', todosController.updateTodo);
-router.delete('/goal/:goalId/:todoId', todosController.deleteTodo);
+router.put('/goal/todo/:todoId', todosController.updateTodo);
+router.delete('/goal/todo/:todoId', todosController.deleteTodo);
 
 router.all('/(.*)', (ctx, error) => {
   ctx.status(404)

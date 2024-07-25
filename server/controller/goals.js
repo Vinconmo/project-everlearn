@@ -36,6 +36,7 @@ const updateGoal = async (ctx) => {
     const {goalId} = ctx.params;
     const {title, dueDate, isCompleted} = ctx.request.body;
     const goal = await db.Goal.findByPk(goalId)
+    // updates only values passed with request
     if (title) goal.title = title;
     if (dueDate) goal.dueDate = dueDate;
     if (isCompleted !== undefined) goal.isCompleted = isCompleted;
@@ -57,7 +58,7 @@ const deleteGoal = async (ctx) => {
     const goal = await db.Goal.findByPk(goalId)
     const deletedGoal = await goal.destroy()
     ctx.status = 200;
-    ctx.body = deletedGoal;
+    ctx.body = goal;
   } catch (error) {
     ctx.status = 404
     ctx.body = {
