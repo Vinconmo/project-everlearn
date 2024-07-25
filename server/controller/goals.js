@@ -4,7 +4,11 @@ const db = require('../db');
 
 const getAll = async (ctx) => {
   try {
-    const goals = await db.Goal.findAll({});
+    const goals = await db.Goal.findAll({
+      include: {
+        model: db.Todo
+      }
+    });
     ctx.status = 200;
     ctx.body = goals;
   } catch (error) {
