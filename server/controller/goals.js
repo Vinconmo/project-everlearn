@@ -34,17 +34,18 @@ const postGoal = async (ctx) => {
 const updateGoal = async (ctx) => {
   try {
     const {goalId} = ctx.params;
-    const {title, dueDate} = ctx.req.body;
-    const goal = db.Goal.update(
-      {title, dueDate},
-      {where: {id: goalId}}
-    )
+    const {title, dueDate, isCompleted} = ctx.request.body;
+    const goal = await db.Goal.findByPk(goalId)
+    if (title) goal.title = title;
+    if (dueDate) goal.dueDate = dueDate;
+    if (isCompleted !== undefined) goal.isCompleted = isCompleted;
+    const updatedGoal = await goal.save();
     ctx.status = 200;
-    ctx.body = goal
+    ctx.body = updatedGoal;
   } catch (error) {
-    ctx.status = 500
+    ctx.status = 404
     ctx.body = {
-      error, msg: 'Request failed'
+      error, msg: 'No entry with this id found'
     }
     console.log(`Error in goals/updateGoal: ${error}`)
   }
@@ -53,15 +54,14 @@ const updateGoal = async (ctx) => {
 const deleteGoal = async (ctx) => {
   try {
     const {goalId} = ctx.params;
-    const goal = db.Goal.destroy(
-      {where: {id: goalId}}
-    )
+    const goal = await db.Goal.findByPk(goalId)
+    const deletedGoal = await goal.destroy()
     ctx.status = 200;
-    ctx.body = goal;
+    ctx.body = deletedGoal;
   } catch (error) {
-    ctx.status = 500
+    ctx.status = 404
     ctx.body = {
-      error, msg: 'Request failed'
+      error, msg: 'No entry with this id found'
     }
     console.log(`Error in goals/deleteGoal: ${error}`)
   }
