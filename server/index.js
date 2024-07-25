@@ -7,7 +7,7 @@ const db = require('./db');
 const router = require('./router');
 const app = new Koa();
 const SERVER_PORT = process.env.SERVER_PORT || 3001;
-const CLIENT_PORT = 3000;
+const CLIENT_PORT = 5173;
 
 const corsConfig = {
   origin: [`http://localhost:${CLIENT_PORT}`]
