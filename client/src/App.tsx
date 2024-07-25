@@ -5,6 +5,7 @@ import {Goal} from './Types'
 import Navbar from './components/Navbar'
 import Dashboard from './components/Dashboard'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+import GoalDetail from './components/GoalDetail'
 
 
 const App: FC = (): JSX.Element => {
@@ -23,6 +24,10 @@ const App: FC = (): JSX.Element => {
     {
       path: '/',
       element: <Dashboard goals={goals}/>
+    },
+    {
+      path: '/goal/:goalId',
+      element: <GoalDetail/> // ^is there a way to pass variable prop? // helper funct that filters goal by id from router params?
     }
 
   ])

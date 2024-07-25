@@ -6,7 +6,7 @@ const todosController = require('./controller/todos');
 
 // goal routes
 router.get('/goal', goalsController.getAll);
-// ^ maybe with individual goal param
+router.get('/goal/:goalId', goalsController.getById)
 router.post('/goal', goalsController.postGoal);
 router.put('/goal/:goalId', goalsController.updateGoal);
 router.delete('/goal/:goalId', goalsController.deleteGoal);

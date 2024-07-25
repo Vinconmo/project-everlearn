@@ -2,13 +2,13 @@ import {FC} from "react";
 import {Goal} from "../Types";
 import { BsThreeDots } from "react-icons/bs";
 import {IconContext} from "react-icons";
-import moment from "moment";
+import { formatDate } from "../utils/utils";
 
 interface props {
   goal: Goal
 }
 
-const GoalItem: FC<props> = ({goal}): JSX.Element => {
+const GoalCard: FC<props> = ({goal}): JSX.Element => {
   return (
     <>
       <div className="flex items-center">
@@ -31,8 +31,4 @@ const GoalItem: FC<props> = ({goal}): JSX.Element => {
   );
 }
 
-function formatDate (date: Date) {
-  return moment(date).format('MMM D, YYYY')
-}
-
-export default GoalItem
+export default GoalCard

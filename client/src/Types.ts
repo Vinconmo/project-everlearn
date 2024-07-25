@@ -17,5 +17,5 @@ export interface Goal {
   isCompleted?: Boolean,
   createdAt?: Date,
   updatedAt?: Date,
-  Todos?: Todo[],
+  Todos: Todo[] | [],
 }

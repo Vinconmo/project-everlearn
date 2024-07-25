@@ -20,6 +20,21 @@ const getAll = async (ctx) => {
   }
 }
 
+const getById = async (ctx) => {
+  try {
+    const {goalId} = ctx.params;
+    const goal = await db.Goal.findByPk(goalId)
+    ctx.status = 200;
+    ctx.body = goal;
+  } catch (error) {
+    ctx.status = 404
+    ctx.body = {
+      error, msg: 'No entry with this id found'
+    }
+    console.log(`Error in goals/getById: ${error}`)
+  }
+}
+
 const postGoal = async (ctx) => {
   try {
     const {title, dueDate} = ctx.request.body;
@@ -74,6 +89,7 @@ const deleteGoal = async (ctx) => {
 
 module.exports = {
   getAll,
+  getById,
   postGoal,
   updateGoal,
   deleteGoal
