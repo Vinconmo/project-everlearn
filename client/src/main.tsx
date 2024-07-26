@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 // import Dashboard from './components/Dashboard'
-import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+// import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 // import GoalDetail from './components/GoalDetail'
 
 // TODO: experiment router

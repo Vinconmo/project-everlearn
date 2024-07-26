@@ -11,7 +11,8 @@ interface props {
 }
 
 const GoalDetail: FC<props> = (): JSX.Element => {
-  const [goal, setGoal] = useState<any>({Todos: []}) // ^solution? can't set empty with type or I can't map over todos
+  const initialGoalState = {Todos: []} // ^solution? can't set empty with type or I can't map over todos
+  const [goal, setGoal] = useState<any>(initialGoalState)
   const [isAddTodo, setIsAddTodo] = useState<Boolean>(false)
 
   // get param from router & convert to number
@@ -32,7 +33,7 @@ const GoalDetail: FC<props> = (): JSX.Element => {
   // get goal
   const todoList = goal.Todos.map((todo: Todo) => {
     return (
-      <TodoCard key={todo.id} todo={todo} onDelete={handleDeleteClick} />
+      <TodoCard key={todo.id} todo={todo} onDelete={handleDeleteClick} setGoal={setGoal} goal={goal}/>
     )
   })
 

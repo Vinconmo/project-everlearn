@@ -1,25 +1,35 @@
-import {FC} from "react";
-import {Todo} from "../Types";
+import {FC, Dispatch, SetStateAction} from "react";
+import {Goal, Todo} from "../Types";
 import {BsThreeDots} from "react-icons/bs";
 import {RiDeleteBinLine} from "react-icons/ri";
+import {MdDone} from "react-icons/md";
 import {IconContext} from "react-icons";
 import { formatDate } from "../utils/utils";
 
 interface props {
-  todo: Todo
+  todo: Todo,
+  goal: Goal,
   onDelete: (todo: Todo) => void, // ^more elegant way?
+  setGoal: Dispatch<SetStateAction<Goal>>,
 }
 
-const TodoCard: FC<props> = ({todo, onDelete}): JSX.Element => {
+const TodoCard: FC<props> = ({todo, onDelete, setGoal, goal}): JSX.Element => {
 
+  function handleCompleteTodo (todo: Todo) {
+    const isCompletedTodo = !todo.isCompletedTodo
+    const filteredTodos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
+    setGoal((prev: Goal) => ({...prev, Todos: [...filteredTodos, {...todo, isCompletedTodo}]}))
+  }
+
+  // TODO: finish complete Todo
   return (
     <>
       <div className="flex items-center">
         <div className="flex flex-col px-5 py-3 bg-white rounded-md text-black mr-5 grow">
           <div className="flex relative">
             <p>{todo.titleTodo}</p>
-            <button className="ml-auto absolute -top-1.5 -right-1">
-              <IconContext.Provider value= {{color: 'var(--highlight-light-color)'}}>
+            <button onClick={() => onDelete(todo)} className="ml-auto absolute -top-1.5 -right-1">
+              <IconContext.Provider value={{color: 'var(--highlight-light-color)'}}>
                 <BsThreeDots />
               </IconContext.Provider>
             </button>
@@ -28,12 +38,12 @@ const TodoCard: FC<props> = ({todo, onDelete}): JSX.Element => {
             <p>{formatDate(todo.dueDateTodo)}</p>
           </div>
         </div>
-        <button onClick={() => onDelete(todo)} className="p2 w-9 h-9 rounded-full bg-[color:var(--highlight-dark-color)]">
-          <RiDeleteBinLine className="m-auto"/>
+        <button onClick={() => handleCompleteTodo(todo)} className="p2 w-9 h-9 rounded-full bg-[color:var(--highlight-dark-color)]">
+          <MdDone className="m-auto" />
         </button>
       </div>
     </>
   );
 }
 
-export default TodoCard
+  export default TodoCard
