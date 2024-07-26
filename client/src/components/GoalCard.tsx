@@ -4,6 +4,7 @@ import { BsThreeDots } from "react-icons/bs";
 import {IconContext} from "react-icons";
 import { formatDate } from "../utils/utils";
 import {useNavigate} from "react-router-dom";
+import {deleteGoal} from "../ApiServices";
 
 interface props {
   goal: Goal
@@ -11,13 +12,19 @@ interface props {
 
 const GoalCard: FC<props> = ({goal}): JSX.Element => {
   const navigate = useNavigate();
+
+  async function handleDelete () {
+    await deleteGoal(goal)
+  }
+
+
   return (
     <>
       <div className="flex items-center">
         <div className="flex flex-col px-5 py-3 bg-white rounded-md text-black mr-5 grow">
           <div className="flex relative">
             <p>{goal.title}</p>
-            <button className="ml-auto absolute -top-1.5 -right-1">
+            <button onClick={handleDelete} className="ml-auto absolute -top-1.5 -right-1">
               <IconContext.Provider value= {{color: 'var(--highlight-light-color)'}}>
                 <BsThreeDots />
               </IconContext.Provider>

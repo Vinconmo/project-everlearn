@@ -18,7 +18,7 @@ const App: FC = (): JSX.Element => {
       setGoals(goals)
     }
     fetchGoals()
-  }, [])
+  }, [isAddGoal, goals])
 
   // ^more elegant way?
   const router = createBrowserRouter([
