@@ -37,7 +37,7 @@ const App: FC = (): JSX.Element => {
     <>
       <div className='flex w-full'>
         <Navbar setIsAddGoal={setIsAddGoal} />
-        <RouterProvider router={router} />
+        <RouterProvider router={router}/>
       </div>
     </>
   )
