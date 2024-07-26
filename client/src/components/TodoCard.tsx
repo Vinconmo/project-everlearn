@@ -4,6 +4,7 @@ import {BsThreeDots} from "react-icons/bs";
 import {MdDone} from "react-icons/md";
 import {IconContext} from "react-icons";
 import { formatDate } from "../utils/utils";
+import {updateTodo} from "../ApiServices";
 
 interface props {
   todo: Todo,
@@ -14,11 +15,14 @@ interface props {
 
 const TodoCard: FC<props> = ({todo, onDelete, setGoal, goal}): JSX.Element => {
 
-  function handleCompleteTodo (todo: Todo) {
-    const isCompletedTodo = !todo.isCompletedTodo
+  async function handleCompleteTodo (todo: Todo) {
+    const isCompletedTodo = !todo.isCompletedTodo;
+    const updatedTodo = {...todo, isCompletedTodo};
+    await updateTodo(updatedTodo)
     const filteredTodos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
-    setGoal((prev: Goal) => ({...prev, Todos: [...filteredTodos, {...todo, isCompletedTodo}]}))
+    setGoal((prev: Goal) => ({...prev, Todos: [...filteredTodos, updatedTodo]}))
   }
+  console.log(todo)
 
   // TODO: finish complete Todo
   return (

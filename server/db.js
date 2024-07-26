@@ -24,6 +24,7 @@ const sequelize = new Sequelize(
 const db = {};
 
 // add all tables (model files) to db
+// ^try & catch
 (async () => {
   const modelFiles = await readdir(join(__dirname, modelDir))
   for (let file of modelFiles) {

@@ -36,7 +36,6 @@ const AddGoal: FC<props> = ({setIsAddGoal}): JSX.Element => {
       [(event.target as HTMLInputElement).name]: (event.target as HTMLInputElement).value,
     }))
   }
-  console.log(goalData);
 
   async function handleFormSubmit (event: FormEvent) {
     event.preventDefault();
@@ -50,7 +49,7 @@ const AddGoal: FC<props> = ({setIsAddGoal}): JSX.Element => {
 
   return (
     <>
-      <div className="absolute bg-black w-screen h-screen flex items-center">
+      <div className="absolute bg-black/70 w-screen h-screen flex items-center">
         <form onSubmit={(event) => handleFormSubmit(event)} className="max-w-sm min-w-fit w-1/2 mx-auto bg-white p-10 rounded-md">
           <div className="mb-5">
             <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900">What would you like to learn?</label>

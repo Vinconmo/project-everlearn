@@ -52,7 +52,7 @@ const AddTodo: FC<props> = ({setIsAddTodo, GoalId}): JSX.Element => {
 
   return (
     <>
-      <div className="absolute bg-black w-screen h-screen flex items-center">
+      <div className="absolute bg-black/70 w-screen h-screen flex items-center">
         <form onSubmit={(event) => handleFormSubmit(event)} className="max-w-sm min-w-fit w-1/2 mx-auto bg-white p-10 rounded-md">
           <div className="mb-5">
             <label htmlFor="titleTodo" className="block mb-2 text-sm font-medium text-gray-900">Name your learning activity:</label>

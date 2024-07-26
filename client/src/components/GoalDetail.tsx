@@ -26,8 +26,7 @@ const GoalDetail: FC<props> = (): JSX.Element => {
       setGoal(goal)
     }
     fetchGoal()
-  }, [isAddTodo, goal, id])
-  // console.log('goal', goal)
+  }, [isAddTodo, id])
 
 
   // get goal
