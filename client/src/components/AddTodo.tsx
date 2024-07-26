@@ -2,7 +2,7 @@ import {ChangeEvent, FC, FormEvent, useState, Dispatch, SetStateAction} from "re
 import {postTodo} from "../ApiServices";
 
 interface props {
-  setIsAddTodo: Dispatch<SetStateAction<Boolean>>,
+  setIsAddTodo: Dispatch<SetStateAction<boolean>>,
   GoalId: number,
 }
 

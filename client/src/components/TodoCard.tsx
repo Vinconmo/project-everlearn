@@ -1,7 +1,6 @@
 import {FC, Dispatch, SetStateAction} from "react";
 import {Goal, Todo} from "../Types";
 import {BsThreeDots} from "react-icons/bs";
-import {RiDeleteBinLine} from "react-icons/ri";
 import {MdDone} from "react-icons/md";
 import {IconContext} from "react-icons";
 import { formatDate } from "../utils/utils";

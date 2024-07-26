@@ -1,9 +1,8 @@
-import {useNavigate} from 'react-router-dom';
 import brandImage from '../assets/leapmind-high-resolution-logo-transparent.png'
 import {FC, Dispatch, SetStateAction} from "react";
 
 interface props {
-  setIsAddGoal: Dispatch<SetStateAction<Boolean>>,
+  setIsAddGoal: Dispatch<SetStateAction<boolean>>,
 }
 
 

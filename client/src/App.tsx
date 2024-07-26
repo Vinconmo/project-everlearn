@@ -10,7 +10,7 @@ import GoalDetail from './components/GoalDetail'
 
 const App: FC = (): JSX.Element => {
   const [goals, setGoals] = useState<Goal[]>([])
-  const [isAddGoal, setIsAddGoal] = useState<Boolean>(false)
+  const [isAddGoal, setIsAddGoal] = useState<boolean>(false)
 
   useEffect(() => {
     const fetchGoals = async () => {

@@ -5,8 +5,8 @@ import AddGoal from "./AddGoal";
 
 interface props {
   goals: Goal[]
-  setIsAddGoal: Dispatch<SetStateAction<Boolean>>,
-  isAddGoal: Boolean,
+  setIsAddGoal: Dispatch<SetStateAction<boolean>>,
+  isAddGoal: boolean,
 }
 
 const Dashboard: FC<props> = ({goals, isAddGoal, setIsAddGoal}): JSX.Element => {

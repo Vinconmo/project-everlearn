@@ -3,7 +3,7 @@ import {Todo} from "../Types";
 import {postGoal} from "../ApiServices";
 
 interface props {
-  setIsAddGoal: Dispatch<SetStateAction<Boolean>>,
+  setIsAddGoal: Dispatch<SetStateAction<boolean>>,
 }
 
 interface GoalData {

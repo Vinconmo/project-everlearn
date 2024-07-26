@@ -13,7 +13,7 @@ interface props {
 const GoalDetail: FC<props> = (): JSX.Element => {
   const initialGoalState = {Todos: []} // ^solution? can't set empty with type or I can't map over todos
   const [goal, setGoal] = useState<any>(initialGoalState)
-  const [isAddTodo, setIsAddTodo] = useState<Boolean>(false)
+  const [isAddTodo, setIsAddTodo] = useState<boolean>(false)
 
   // get param from router & convert to number
   const params = useParams();
@@ -26,7 +26,7 @@ const GoalDetail: FC<props> = (): JSX.Element => {
       setGoal(goal)
     }
     fetchGoal()
-  }, [isAddTodo, goal])
+  }, [isAddTodo, goal, id])
   // console.log('goal', goal)
 
 
