@@ -1,6 +1,5 @@
 import {ChangeEvent, FC, FormEvent, useState, Dispatch, SetStateAction} from "react";
-import {Todo} from "../Types";
-import {postGoal, postTodo} from "../ApiServices";
+import {postTodo} from "../ApiServices";
 
 interface props {
   setIsAddTodo: Dispatch<SetStateAction<Boolean>>,
@@ -12,6 +11,7 @@ interface TodoData {
   dueDateTodo: string,
   resource: string,
   comments: string,
+  GoalId: number,
 }
 
 // TODO: color background
@@ -29,7 +29,7 @@ const AddTodo: FC<props> = ({setIsAddTodo, GoalId}): JSX.Element => {
     return `${year}-${month < 10 ? 0 : ''}${month}-${day}`
   }
 
-  const initialTodoData = {titleTodo: '', dueDateTodo: placeholder, resource: '', comments: ''}
+  const initialTodoData = {titleTodo: '', dueDateTodo: placeholder, resource: '', comments: '', GoalId}
   const [todoData, setTodoData] = useState<TodoData>(initialTodoData)
 
   function handleFormChange (event: ChangeEvent) {
@@ -44,7 +44,7 @@ const AddTodo: FC<props> = ({setIsAddTodo, GoalId}): JSX.Element => {
     event.preventDefault();
     // convert HTML Input into Date object
     const dueDateTodo = new Date(todoData.dueDateTodo)
-    await postTodo({...todoData, dueDateTodo, GoalId}, GoalId)
+    await postTodo({...todoData, dueDateTodo}, GoalId)
     setTodoData(initialTodoData)
     // set state to return to Goal Details
     setIsAddTodo(false)

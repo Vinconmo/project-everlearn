@@ -2,8 +2,8 @@ import {FC, useEffect, useState} from "react";
 import TodoCard from "./TodoCard";
 import AddTodo from "./AddTodo"
 import {useParams} from "react-router-dom";
-import {getGoalById} from "../ApiServices";
-import {Todo} from '../Types'
+import {deleteTodo, getGoalById} from "../ApiServices";
+import {Todo, Goal} from '../Types'
 
 
 
@@ -25,20 +25,26 @@ const GoalDetail: FC<props> = (): JSX.Element => {
       setGoal(goal)
     }
     fetchGoal()
-  }, [isAddTodo])
+  }, [isAddTodo, goal])
   // console.log('goal', goal)
 
 
   // get goal
   const todoList = goal.Todos.map((todo: Todo) => {
     return (
-      <TodoCard key={todo.id} todo={todo} />
+      <TodoCard key={todo.id} todo={todo} onDelete={handleDeleteClick} />
     )
   })
 
   //
   function handleClickNew () {
     setIsAddTodo(true)
+  }
+
+  async function handleDeleteClick (todo: Todo) {
+    await deleteTodo(todo)
+    const Todos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
+    setGoal((prev: Goal) => ({...prev, Todos}))
   }
 
 

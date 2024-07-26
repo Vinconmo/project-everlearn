@@ -1,14 +1,17 @@
 import {FC} from "react";
 import {Todo} from "../Types";
-import { BsThreeDots } from "react-icons/bs";
+import {BsThreeDots} from "react-icons/bs";
+import {RiDeleteBinLine} from "react-icons/ri";
 import {IconContext} from "react-icons";
 import { formatDate } from "../utils/utils";
 
 interface props {
   todo: Todo
+  onDelete: (todo: Todo) => void, // ^more elegant way?
 }
 
-const TodoCard: FC<props> = ({todo}): JSX.Element => {
+const TodoCard: FC<props> = ({todo, onDelete}): JSX.Element => {
+
   return (
     <>
       <div className="flex items-center">
@@ -25,7 +28,9 @@ const TodoCard: FC<props> = ({todo}): JSX.Element => {
             <p>{formatDate(todo.dueDateTodo)}</p>
           </div>
         </div>
-        <button className="p2 w-9 h-9 rounded-full bg-[color:var(--highlight-dark-color)]">{'>'}</button>
+        <button onClick={() => onDelete(todo)} className="p2 w-9 h-9 rounded-full bg-[color:var(--highlight-dark-color)]">
+          <RiDeleteBinLine className="m-auto"/>
+        </button>
       </div>
     </>
   );
