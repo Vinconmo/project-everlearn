@@ -5,31 +5,38 @@ import {MdDone} from "react-icons/md";
 import {AiOutlineRedo} from "react-icons/ai";
 import {IconContext} from "react-icons";
 import { formatDate } from "../utils/utils";
-import {updateTodo} from "../ApiServices";
+import {updateGoal, updateTodo} from "../ApiServices";
 
 interface props {
   todo: Todo,
   goal: Goal,
   onDelete: (todo: Todo) => void, // ^more elegant way?
   setGoal: Dispatch<SetStateAction<Goal>>,
-  completed: boolean,
+  todoCompleted: boolean,
+  goalCompleted: boolean,
 }
 
-const TodoCard: FC<props> = ({todo, onDelete, setGoal, goal, completed}): JSX.Element => {
+const TodoCard: FC<props> = ({todo, onDelete, setGoal, goal, todoCompleted, goalCompleted}): JSX.Element => {
 
   async function handleCompleteTodo (todo: Todo) {
     const isCompletedTodo = !todo.isCompletedTodo;
     const updatedTodo = {...todo, isCompletedTodo};
-    await updateTodo(updatedTodo)
+    const resTodo = await updateTodo(updatedTodo)
+    // if todo is reverted to open but goal was completed -> update goal in db
+    // updatedGoal stays the old Goal or is updated after fetch
+    let updatedGoal = goal;
+    if (todo.isCompletedTodo && goalCompleted) {
+      updatedGoal = await updateGoal({...goal, isCompleted: false})
+    }
     const filteredTodos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
-    setGoal((prev: Goal) => ({...prev, Todos: [...filteredTodos, updatedTodo]}))
+    setGoal({...updatedGoal, Todos: [...filteredTodos, resTodo]})
+
   }
-  console.log(todo)
 
   return (
     <>
       {
-        completed &&
+        todoCompleted &&
           <div className="flex items-center">
             <div className="flex flex-col px-5 py-3 bg-white/60 rounded-md text-gray-400 mr-5 grow">
               <div className="flex relative">
@@ -52,7 +59,7 @@ const TodoCard: FC<props> = ({todo, onDelete, setGoal, goal, completed}): JSX.El
           </div>
       }
       {
-        !completed &&
+        !todoCompleted &&
           <div className="flex items-center">
             <div className="flex flex-col px-5 py-3 bg-white rounded-md text-black mr-5 grow">
               <div className="flex relative">

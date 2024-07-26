@@ -59,7 +59,12 @@ const updateGoal = async (ctx) => {
   try {
     const {goalId} = ctx.params;
     const {title, dueDate, isCompleted} = ctx.request.body;
-    const goal = await db.Goal.findByPk(goalId)
+    const goal = await db.Goal.findOne({
+      where: { id: goalId },
+      include: {
+        model: db.Todo,
+      },
+    });
     // updates only values passed with request
     if (title) goal.title = title;
     if (dueDate) goal.dueDate = dueDate;

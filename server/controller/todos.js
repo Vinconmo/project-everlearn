@@ -33,7 +33,6 @@ const postTodo = async (ctx) => {
 const updateTodo = async (ctx) => {
   try {
     const {todoId} = ctx.params;
-    console.log(todoId);
     const {
       titleTodo,
       dueDateTodo,
