@@ -1,8 +1,9 @@
 import {FC, useEffect, useState} from "react";
 import TodoCard from "./TodoCard";
+import AddTodo from "./AddTodo"
 import {useParams} from "react-router-dom";
 import {getGoalById} from "../ApiServices";
-import {Goal, Todo} from '../Types'
+import {Todo} from '../Types'
 
 
 
@@ -11,6 +12,8 @@ interface props {
 
 const GoalDetail: FC<props> = (): JSX.Element => {
   const [goal, setGoal] = useState<any>({Todos: []}) // ^solution? can't set empty with type or I can't map over todos
+  const [isAddTodo, setIsAddTodo] = useState<Boolean>(false)
+
   // get param from router & convert to number
   const params = useParams();
   const id = Number(params.goalId);
@@ -22,7 +25,7 @@ const GoalDetail: FC<props> = (): JSX.Element => {
       setGoal(goal)
     }
     fetchGoal()
-  }, [])
+  }, [isAddTodo])
   // console.log('goal', goal)
 
 
@@ -33,13 +36,18 @@ const GoalDetail: FC<props> = (): JSX.Element => {
     )
   })
 
+  //
+  function handleClickNew () {
+    setIsAddTodo(true)
+  }
+
 
   return (
     <>
       <div className="flex flex-col pt-16 px-10 w-full">
         <div className="flex mb-5 w-400 items-end">
           <h1>Your goal: {goal.title} 🚀</h1>
-          <button className="ml-auto bg-[color:var(--highlight-light-color)] px-4 py-0.5 rounded-md"><span className="font-semibold mr-3">+</span>New</button>
+          <button onClick={handleClickNew} className="ml-auto bg-[color:var(--highlight-light-color)] px-4 py-0.5 rounded-md"><span className="font-semibold mr-3">+</span>New</button>
         </div>
         <div className="flex flex-col gap-y-5">
           {
@@ -47,6 +55,7 @@ const GoalDetail: FC<props> = (): JSX.Element => {
           }
         </div>
       </div>
+      {isAddTodo && <AddTodo setIsAddTodo={setIsAddTodo} GoalId={goal.id}/>}
     </>
   )
 }

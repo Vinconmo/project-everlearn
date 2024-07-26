@@ -1,6 +1,5 @@
 import {ChangeEvent, FC, FormEvent, useState, Dispatch, SetStateAction} from "react";
-import {Goal, Todo} from "../Types";
-import {useNavigate} from "react-router-dom";
+import {Todo} from "../Types";
 import {postGoal} from "../ApiServices";
 
 interface props {
