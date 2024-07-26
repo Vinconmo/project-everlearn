@@ -1,6 +1,7 @@
 import {FC} from "react";
 import {Goal} from "../Types";
 import GoalCard from "./GoalCard";
+import AddGoal from "./AddGoal";
 
 interface props {
   goals: Goal[]
@@ -26,6 +27,7 @@ const Dashboard: FC<props> = ({goals}): JSX.Element => {
           }
         </div>
       </div>
+      <AddGoal/>
     </>
   );
 }
