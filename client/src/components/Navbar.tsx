@@ -1,6 +1,12 @@
 import brandImage from '../assets/leapmind-high-resolution-logo-transparent.png'
+import {FC, Dispatch, SetStateAction} from "react";
 
-export default function Navbar () {
+interface props {
+  setIsAddGoal: Dispatch<SetStateAction<Boolean>>,
+}
+
+
+const Navbar: FC<props> = ({setIsAddGoal}): JSX.Element => {
   return (
     <>
       <div className="h-screen block pt-5 pl-5 pr-8 bg-[color:var(--highlight-dark-color)]">
@@ -26,3 +32,5 @@ export default function Navbar () {
     </>
   );
 }
+
+export default Navbar

@@ -10,6 +10,7 @@ import GoalDetail from './components/GoalDetail'
 
 const App: FC = (): JSX.Element => {
   const [goals, setGoals] = useState<Goal[]>([])
+  const [isAddGoal, setIsAddGoal] = useState<Boolean>(false)
 
   useEffect(() => {
     const fetchGoals = async () => {
@@ -23,7 +24,7 @@ const App: FC = (): JSX.Element => {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Dashboard goals={goals} />
+      element: <Dashboard goals={goals} setIsAddGoal={setIsAddGoal} isAddGoal={isAddGoal} />
     },
     {
       path: 'goal/:goalId',
@@ -35,7 +36,7 @@ const App: FC = (): JSX.Element => {
   return (
     <>
       <div className='flex w-full'>
-        <Navbar />
+        <Navbar setIsAddGoal={setIsAddGoal} />
         <RouterProvider router={router} />
       </div>
     </>

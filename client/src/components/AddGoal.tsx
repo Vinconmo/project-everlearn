@@ -1,9 +1,10 @@
-import {ChangeEvent, FC, FormEvent, useState} from "react";
+import {ChangeEvent, FC, FormEvent, useState, Dispatch, SetStateAction} from "react";
 import {Goal, Todo} from "../Types";
 import {useNavigate} from "react-router-dom";
 import {postGoal} from "../ApiServices";
 
 interface props {
+  setIsAddGoal: Dispatch<SetStateAction<Boolean>>,
 }
 
 interface GoalData {
@@ -13,7 +14,7 @@ interface GoalData {
 }
 
 // TODO: color background
-const AddGoal: FC<props> = (): JSX.Element => {
+const AddGoal: FC<props> = ({setIsAddGoal}): JSX.Element => {
   // setting placeholder for HTML Date Input
   const now = new Date();
   now.setMonth(now.getMonth() + 2, 0);
@@ -40,15 +41,13 @@ const AddGoal: FC<props> = (): JSX.Element => {
 
   async function handleFormSubmit (event: FormEvent) {
     event.preventDefault();
+    // convert HTML Input into Date object
     const dueDate = new Date(goalData.dueDate)
     await postGoal({...goalData, dueDate}) // ^what if I wanted to do an error check? TS expects result to be of type Goal
     setGoalData(initialGoalData)
+    // set state to return to Dashboard
+    setIsAddGoal(false)
   }
-
-
-
-
-
 
   return (
     <>
