@@ -33,14 +33,21 @@ body, html {
   padding: 0;
   display: flex;
   /* min-width: 320px; */
-  width: 100vw;
   min-height: 100vh;
 }
+
+html, body {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
 
 #root {
 	padding: 0;
   margin: 0;
   width: 100%;
+  box-sizing: border-box;
 }
 
 h1 {

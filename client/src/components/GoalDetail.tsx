@@ -95,10 +95,10 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
   // Todo: refactor
   return (
     <>
-      <div className={`flex flex-col pt-16 px-10 w-full ${openTodos.length > 0 ? 'gap-y-8' : 'gap-y-0'}`}>
+      <div className={`flex flex-col pt-16 px-10 ${openTodos.length > 0 ? 'gap-y-8' : 'gap-y-0'}`}>
           {
              !isCompleted ?
-              <div className="flex flex-col px-10 w-full">
+              <div className="flex flex-col px-10">
               <div className="flex mb-5 w-400 items-end">
 
                 <h1 className="text-left">
@@ -120,7 +120,7 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
                   }
                 </div>
               </div> :
-              <div className="flex flex-col px-10 w-full">
+              <div className="flex flex-col px-10">
               <div className="flex mb-5 w-400 items-end">
                 <h1 className="text-left">
                   <span className="text-gray-400 text-sm font-semibold">You reached your goal 🚀</span><br />
@@ -137,7 +137,7 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
               </div>
           }
         { isCompleted &&
-            <div className="flex flex-col px-10 w-full">
+            <div className="flex flex-col px-10">
               <div className="flex mb-5 w-400 items-end">
                 <h2>Completed Todos 💪</h2>
               </div>

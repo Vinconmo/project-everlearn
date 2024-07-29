@@ -13,7 +13,7 @@ const Navbar: FC<props> = ({setIsAddGoal}): JSX.Element => {
 
   return (
     <>
-      <div className="sticky top-0 left-0 h-screen block pt-5 pl-5 pr-8 bg-[color:var(--highlight-dark-color)]">
+      <div className="sticky top-0 left-0 h-screen block pt-5 pl-5 pr-8 bg-[color:var(--highlight-dark-color)] w-2/12 border-box">
         <div className="">
           <a href='/'><img src={brandImage} width={150}></img></a>
         </div>

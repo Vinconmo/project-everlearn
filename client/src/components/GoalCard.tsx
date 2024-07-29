@@ -7,8 +7,6 @@ import {formatDate} from "../utils/utils";
 import {useNavigate} from "react-router-dom";
 import {deleteGoal} from "../ApiServices";
 import {Card, CardContent} from '@mui/material';
-import {ClassNames} from "@emotion/react";
-
 
 interface props {
   goal: Goal
@@ -40,7 +38,7 @@ const GoalCard: FC<props> = ({goal}): JSX.Element => {
                 {goal.title}
               </h3>
               <p className="relative top-2.5 text-gray-400 text-xs">{`${completedTodos.length} / ${todosNum}`}</p>
-              <progress value={progress} max="1" className="w-full my-3"></progress>
+              <progress value={progress} max="1" className="my-3"></progress>
               <div className="flex flex-col text-left text-sm font-medium gap-y-3">
                 <p>
                   <span className="text-gray-400 text-xs">Completed</span><br />
@@ -59,7 +57,7 @@ const GoalCard: FC<props> = ({goal}): JSX.Element => {
       {
         !goal.isCompleted &&
         <a onClick={() => navigate(`/goal/${goal.id}`)} className="cursor-pointer">
-          <Card sx={{minWidth: 275, maxWidth: 350}} classes={{root: "relative px-2 text-left"}}>
+          <Card sx={{minWidth: 275, maxWidth: 350}} classes={{root: "relative px-2 text-left h-full"}}>
             <CardContent>
               <h3 className="font-semibold">
                 <span className="text-gray-400 text-xs font-medium">Goal</span><br />

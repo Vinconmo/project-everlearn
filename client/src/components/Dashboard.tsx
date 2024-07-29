@@ -33,18 +33,18 @@ const Dashboard: FC<props> = ({isAddGoal, setIsAddGoal, openGoals, completedGoal
 
   return (
     <>
-      <div className="flex flex-col pt-16 px-10 w-full">
-        <div className="flex mb-5 px-10 w-400 items-end">
+      <div className="flex flex-col pt-16 px-10 w-10/12 justify-items-stretch border-box grow">
+        <div className="flex mb-5 px-10 items-end">
           <h1>Welcome back, Vincent! 👋</h1>
           <button onClick={handleBtnClick} className="ml-auto bg-[color:var(--highlight-light-color)] px-4 py-0.5 rounded-md"><span className="font-semibold mr-3">+</span>New</button>
         </div>
 
-        <div className={`flex flex-col items-start px-10 w-full ${openGoals.length > 0 ? 'gap-y-8' : 'gap-y-0'}`}>
+        <div className={`flex flex-col flex-wrap items-start px-10 ${openGoals.length > 0 ? 'gap-y-8' : 'gap-y-0'}`}>
           {
             openGoals.length > 0 &&
-            <div className="flex flex-col 10 w-full">
+            <div className="flex flex-col flex-wrap">
                 <h2 className="text-left">Active goals 🎯</h2>
-                <div className="flex flex-col gap-y-5 my-5">
+                <div className="flex items-stretch gap-5 my-5 flex-wrap">
                   {
                     createGoalList(openGoals)
                   }
@@ -53,9 +53,9 @@ const Dashboard: FC<props> = ({isAddGoal, setIsAddGoal, openGoals, completedGoal
           }
           {
             completedGoals.length > 0 &&
-            <div className="flex flex-col 10 w-full">
+            <div className="flex flex-col">
                 <h2 className="text-left">Completed goals 💪</h2>
-              <div className="flex flex-col gap-y-5 my-5">
+                <div className="flex items-stretch gap-5 my-5 flex-wrap">
                 {
                   createGoalList(completedGoals)
                 }

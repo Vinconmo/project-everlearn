@@ -50,7 +50,7 @@ const AddGoal: FC<props> = ({setIsAddGoal}): JSX.Element => {
   return (
     <>
       <div className="absolute bg-black/70 w-screen h-screen flex items-center">
-        <form onSubmit={(event) => handleFormSubmit(event)} className="max-w-sm min-w-fit w-1/2 mx-auto bg-white p-10 rounded-md">
+        <form onSubmit={(event) => handleFormSubmit(event)} className="max-w-sm min-w-fit w-1/3 mx-auto bg-white p-10 rounded-md">
           <div className="mb-5">
             <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900">What would you like to learn?</label>
             <input type="text" id="title" name="title" onChange={(event) => handleFormChange(event)} value={goalData.title} placeholder="Build Leapmind with React Native" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
