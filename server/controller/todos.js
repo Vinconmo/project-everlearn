@@ -1,6 +1,7 @@
 'use strict';
 
 const db = require("../db");
+const {generateTodos} = require('./gemini')
 
 const postTodo = async (ctx) => {
   try {
@@ -75,8 +76,29 @@ const deleteTodo = async (ctx) => {
   }
 }
 
+const getAiTodos = async (ctx) => {
+  try {
+    const { goalId } = ctx.params;
+    // fetch from AI
+    const res = await generateTodos();
+    console.log(res);
+    // for each todo create todo
+    ctx.status = 200;
+    ctx.body = {res};
+    //
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = {
+      error,
+      msg: "Request failed",
+    };
+    console.log(`Error in Todos/getAiTodos: ${error}`);
+  }
+};
+
 module.exports = {
   postTodo,
   updateTodo,
   deleteTodo,
+  getAiTodos,
 }

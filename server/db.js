@@ -28,10 +28,13 @@ const db = {};
 (async () => {
   const modelFiles = await readdir(join(__dirname, modelDir))
   for (let file of modelFiles) {
-    // invoke function in each model which returns the model
-    const model = require(join(__dirname, modelDir, file))(sequelize)
-    db[model.name] = model;
-    console.log(`🧩 Model ${model.name} in database`)
+    // skip models
+    if (file !== 'gemini.js') {
+      // invoke function in each model which returns the model
+      const model = require(join(__dirname, modelDir, file))(sequelize)
+      db[model.name] = model;
+      console.log(`🧩 Model ${model.name} in database`)
+    }
   }
   // create table relations using associate method of the model
   for (let modelName in db) {
