@@ -47,21 +47,34 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
   }
 
   async function handleTodoComplete (todo: Todo): Promise<void> {
-    const isCompletedTodo = !todo.isCompletedTodo;
+    const isCompletedTodo = true;
     const updatedTodo = {...todo, isCompletedTodo};
     const resTodo = await updateTodo(updatedTodo)
-    // if todo is reverted to open but goal was completed -> update goal in db
-    // updatedGoal stays the old Goal or is updated after fetch
-    let updatedGoal = goal;
-    if (todo.isCompletedTodo && isCompleted) {
-      updatedGoal = await updateGoal({...goal, isCompleted: false});
-      setIsCompleted(false);
-    } else if (goal.Todos.length > 0 && !isCompleted && openTodos.length === 1) {
+    const filteredTodos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
+    let updatedGoal = {...goal, Todos: [...filteredTodos, resTodo]}
+    if (goal.Todos.length > 0 && !isCompleted && openTodos.length === 1) {
       updatedGoal = await updateGoal({...goal, isCompleted: true})
       setIsCompleted(true)
     }
+    setGoal(updatedGoal) // can be set in if since updated by Check
+    setGoals((prev: Goal[]) => {
+      const filteredGoals = prev.filter((item: Goal) => item.id !== goal.id)
+      return [...filteredGoals, updatedGoal]
+    })
+  }
+
+  async function handleTodoRecover (todo: Todo): Promise<void> {
+    const isCompletedTodo = false;
+    const updatedTodo = {...todo, isCompletedTodo};
+    const resTodo = await updateTodo(updatedTodo)
     const filteredTodos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
-    updatedGoal = {...updatedGoal, Todos: [...filteredTodos, resTodo]}
+    // if todo is reverted to open but goal was completed -> update goal in db
+    // updatedGoal stays the old Goal or is updated after fetch
+    let updatedGoal = {...goal, Todos: [...filteredTodos, resTodo]}
+    if (todo.isCompletedTodo && isCompleted) {
+      updatedGoal = await updateGoal({...goal, isCompleted: false});
+      setIsCompleted(false);
+    }
     setGoal(updatedGoal) // can be set in if since updated by Check
     setGoals((prev: Goal[]) => {
       const filteredGoals = prev.filter((item: Goal) => item.id !== goal.id)
@@ -76,7 +89,7 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
     // create todo list for rendering todo cards
     return sortedTodos.map((todo: Todo): JSX.Element => {
       return (
-        <TodoCard key={todo.id} todo={todo} onDelete={handleDeleteClick} handleTodoComplete={handleTodoComplete} todoCompleted={completed} />
+        <TodoCard key={todo.id} todo={todo} onDelete={handleDeleteClick} handleTodoComplete={handleTodoComplete} handleTodoRecover={handleTodoRecover} todoCompleted={completed} />
       )
     })
   }
@@ -95,7 +108,7 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
   // Todo: refactor
   return (
     <>
-      <div className={`flex flex-col pt-16 px-10 ${openTodos.length > 0 ? 'gap-y-8' : 'gap-y-0'}`}>
+      <div className={`flex flex-col pt-16 px-10 w-10/12 ${openTodos.length > 0 ? 'gap-y-8' : 'gap-y-0'}`}>
           {
              !isCompleted ?
               <div className="flex flex-col px-10">
@@ -136,7 +149,7 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
                 </div>
               </div>
           }
-        { isCompleted &&
+        { completedTodos.length > 0 &&
             <div className="flex flex-col px-10">
               <div className="flex mb-5 w-400 items-end">
                 <h2>Completed Todos 💪</h2>

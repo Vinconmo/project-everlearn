@@ -13,7 +13,7 @@ interface props {
   openGoals: Goal[],
 }
 
-const Dashboard: FC<props> = ({isAddGoal, setIsAddGoal, openGoals, completedGoals}): JSX.Element => {
+const Dashboard: FC<props> = ({isAddGoal, setIsAddGoal, openGoals, completedGoals, setGoals}): JSX.Element => {
 
   // list factory for both goal list types
   function createGoalList (goals: Goal[]): JSX.Element[] {
@@ -22,7 +22,7 @@ const Dashboard: FC<props> = ({isAddGoal, setIsAddGoal, openGoals, completedGoal
     // create goal list for rendering goal cards
     return sortedGoals.map((goal: Goal): JSX.Element => {
       return (
-        <GoalCard key={goal.id} goal={goal} />
+        <GoalCard key={goal.id} goal={goal} setGoals={setGoals} />
       )
     })
   }

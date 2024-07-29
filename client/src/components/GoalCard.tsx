@@ -1,4 +1,4 @@
-import {FC} from "react";
+import {FC, MouseEvent, Dispatch, SetStateAction} from "react";
 import {Goal, Todo} from "../Types";
 import {BsThreeDots} from "react-icons/bs";
 import {MdDeleteOutline} from "react-icons/md";
@@ -10,13 +10,19 @@ import {Card, CardContent} from '@mui/material';
 
 interface props {
   goal: Goal
+  setGoals: Dispatch<SetStateAction<Goal[]>>,
 }
 
-const GoalCard: FC<props> = ({goal}): JSX.Element => {
+const GoalCard: FC<props> = ({goal, setGoals}): JSX.Element => {
   const navigate = useNavigate();
 
-  async function handleDelete () {
-    await deleteGoal(goal)
+  async function handleDelete (e: MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation()
+    const res = await deleteGoal(goal)
+    setGoals((prev: Goal[]) => {
+      const filteredGoals = prev.filter((item: Goal) => item.id !== res.id)
+      return [...filteredGoals]
+    })
   }
 
   const completedTodos = goal.Todos.filter((todo: Todo) => todo.isCompletedTodo)
@@ -30,8 +36,8 @@ const GoalCard: FC<props> = ({goal}): JSX.Element => {
     <>
       {
         goal.isCompleted &&
-        <a onClick={() => navigate(`/goal/${goal.id}`)} className="cursor-pointer">
-          <Card sx={{minWidth: 275, maxWidth: 350}} classes={{root: "relative px-2 text-left"}}>
+        <a onClick={() => navigate(`/goal/${goal.id}`)} className="cursor-pointer min-w-80">
+            <Card classes={{root: "relative px-2 text-left"}}>
             <CardContent>
               <h3 className="font-semibold">
                 <span className="text-gray-400 text-xs font-medium">Goal</span><br />
@@ -45,7 +51,7 @@ const GoalCard: FC<props> = ({goal}): JSX.Element => {
                   {formatDate(goal.updatedAt)}
                 </p>
               </div>
-              <button onClick={handleDelete} className="absolute top-2 right-2.5">
+              <button onClick={(event) => handleDelete(event)} className="absolute top-2 right-2.5 z-10">
                 <IconContext.Provider value={{color: 'grey', size: '1em'}}>
                   <MdDeleteOutline />
                 </IconContext.Provider>
@@ -56,8 +62,8 @@ const GoalCard: FC<props> = ({goal}): JSX.Element => {
       }
       {
         !goal.isCompleted &&
-        <a onClick={() => navigate(`/goal/${goal.id}`)} className="cursor-pointer">
-          <Card sx={{minWidth: 275, maxWidth: 350}} classes={{root: "relative px-2 text-left h-full"}}>
+        <a onClick={() => navigate(`/goal/${goal.id}`)} className="cursor-pointer min-w-80">
+          <Card classes={{root: "relative px-2 text-left h-full"}}>
             <CardContent>
               <h3 className="font-semibold">
                 <span className="text-gray-400 text-xs font-medium">Goal</span><br />
