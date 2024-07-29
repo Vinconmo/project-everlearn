@@ -24,8 +24,8 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
   const params = useParams();
   const id = Number(params.goalId);
 
-  let completedTodos = [];
-  let openTodos = [];
+  let completedTodos: Todo[] | [] = [];
+  let openTodos: Todo[] | [] = [];
 
   useEffect(() => {
     // fetch goal data based on id from param
@@ -38,6 +38,7 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
     fetchGoal()
   }, [isAddTodo]) // ! id removed // not optimal to refetch - maybe work with state
 
+  console.log(goal)
 
   // filter todos by completion
   if (goal.Todos.length > 0) {
@@ -54,7 +55,8 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
     // updatedGoal stays the old Goal or is updated after fetch
     let updatedGoal = goal;
     if (todo.isCompletedTodo && isCompleted) {
-      updatedGoal = await updateGoal({...goal, isCompleted: false})
+      updatedGoal = await updateGoal({...goal, isCompleted: false});
+      setIsCompleted(false);
     }
     const filteredTodos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
     updatedGoal = {...updatedGoal, Todos: [...filteredTodos, resTodo]}
