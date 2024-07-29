@@ -55,6 +55,26 @@ h2 {
   color: black;
 }
 
+progress[value] {
+  -webkit-appearance: none;
+   appearance: none;
+   height: 5px;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+progress[value]::-webkit-progress-value {
+  background-color: #5D5DE9;
+  border-radius: 2px;
+  background-size: 100% 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+
 /*
 a {
   font-weight: 500;

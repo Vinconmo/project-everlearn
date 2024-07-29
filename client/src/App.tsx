@@ -22,6 +22,8 @@ const App: FC = (): JSX.Element => {
 
   const completedGoals = goals.filter((goal: Goal) => goal.isCompleted)
   const openGoals = goals.filter((goal: Goal) => !goal.isCompleted)
+  console.log('goals', goals)
+  console.log(completedGoals)
 
   // ^more elegant way?
   const router = createBrowserRouter([

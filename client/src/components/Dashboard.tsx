@@ -3,6 +3,7 @@ import {Goal} from "../Types";
 import GoalCard from "./GoalCard";
 import AddGoal from "./AddGoal";
 
+
 interface props {
   goals: Goal[], // ^not used atm
   setIsAddGoal: Dispatch<SetStateAction<boolean>>,
@@ -13,23 +14,6 @@ interface props {
 }
 
 const Dashboard: FC<props> = ({isAddGoal, setIsAddGoal, openGoals, completedGoals}): JSX.Element => {
-  // let completedGoals: Goal[] | [] = []
-  // filter goals by completion
-  // const [openGoals, setOpenGoals] = useState<Goal[] | []>([]);
-
-
-  // useEffect(() => {
-  //   completedGoals = goals.filter((goal: Goal) => goal.isCompleted)
-  //   const initialOpen = goals.filter((goal: Goal) => !goal.isCompleted)
-  //   setOpenGoals(initialOpen)
-  // }, [goals])
-
-  // if (goals.length > 0) {
-  //   completedGoals = goals.filter((goal: Goal) => goal.isCompleted)
-  //   // const openGoals = goals.filter((goal: Goal) => !goal.isCompleted)
-  // }
-
-  // const [completedGoals, setCompletedGoals] = useState<Goal[] | []>(initialCompleted);
 
   // list factory for both goal list types
   function createGoalList (goals: Goal[]): JSX.Element[] {

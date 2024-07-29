@@ -18,14 +18,14 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
   const initialGoalState = {Todos: []} // ^solution? can't set empty with type or I can't map over todos
   const [goal, setGoal] = useState<any>(initialGoalState)
   const [isAddTodo, setIsAddTodo] = useState<boolean>(false)
-  const [isCompleted, setIsCompleted] = useState<boolean>(false)
+  const [isCompleted, setIsCompleted] = useState<boolean>(false) //
 
   // get param from router & convert to number
   const params = useParams();
   const id = Number(params.goalId);
 
   let completedTodos: Todo[] | [] = [];
-  let openTodos: Todo[] | [] = [];
+  let openTodos: Todo[] | [] = []; // ^maybe state?
 
   useEffect(() => {
     // fetch goal data based on id from param
@@ -34,17 +34,16 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
       setGoal(goal)
       // check completion status of goal after fetching
       if (isCompleted !== goal.isCompleted) setIsCompleted(true)
+      console.log(isCompleted)
     }
     fetchGoal()
   }, [isAddTodo]) // ! id removed // not optimal to refetch - maybe work with state
-
-  console.log(goal)
 
   // filter todos by completion
   if (goal.Todos.length > 0) {
     completedTodos = goal.Todos.filter((todo: Todo) => todo.isCompletedTodo)
     openTodos = goal.Todos.filter((todo: Todo) => !todo.isCompletedTodo)
-    isGoalCompleted(goal);
+    // setIsCompleted(goal.isCompleted);
   }
 
   async function handleTodoComplete (todo: Todo): Promise<void> {
@@ -57,10 +56,13 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
     if (todo.isCompletedTodo && isCompleted) {
       updatedGoal = await updateGoal({...goal, isCompleted: false});
       setIsCompleted(false);
+    } else if (goal.Todos.length > 0 && !isCompleted && openTodos.length === 1) {
+      updatedGoal = await updateGoal({...goal, isCompleted: true})
+      setIsCompleted(true)
     }
     const filteredTodos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
     updatedGoal = {...updatedGoal, Todos: [...filteredTodos, resTodo]}
-    setGoal(updatedGoal)
+    setGoal(updatedGoal) // can be set in if since updated by Check
     setGoals((prev: Goal[]) => {
       const filteredGoals = prev.filter((item: Goal) => item.id !== goal.id)
       return [...filteredGoals, updatedGoal]
@@ -79,16 +81,6 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
     })
   }
 
-  // check if goal completed
-  async function isGoalCompleted (goal: Goal): Promise<void> {
-    const isCompleted = goal.isCompleted;
-    // sets isCompleted to true if at least 1 todo exists and no further open todos
-    if (goal.Todos.length > 0 && !isCompleted && openTodos.length == 0) {
-      const res = await updateGoal({...goal, isCompleted: !isCompleted})
-      setGoal(res)
-      setIsCompleted(true)
-    }
-  }
 
   function handleClickNew () {
     setIsAddTodo(true)
