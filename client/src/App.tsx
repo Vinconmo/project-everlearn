@@ -18,17 +18,20 @@ const App: FC = (): JSX.Element => {
       setGoals(goals)
     }
     fetchGoals()
-  }, [isAddGoal])
+  }, [isAddGoal]) // ! infinite re-render
+
+  const completedGoals = goals.filter((goal: Goal) => goal.isCompleted)
+  const openGoals = goals.filter((goal: Goal) => !goal.isCompleted)
 
   // ^more elegant way?
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Dashboard goals={goals} setIsAddGoal={setIsAddGoal} isAddGoal={isAddGoal} />
+      element: <Dashboard goals={goals} setIsAddGoal={setIsAddGoal} isAddGoal={isAddGoal} setGoals={setGoals} completedGoals={completedGoals} openGoals={openGoals} />
     },
     {
       path: 'goal/:goalId',
-      element: <GoalDetail /> // ^is there a way to pass variable prop? // helper funct that filters goal by id from router params?
+      element: <GoalDetail setGoals={setGoals} /> // ^is there a way to pass variable prop? // helper funct that filters goal by id from router params?
     }
 
   ])

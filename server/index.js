@@ -10,8 +10,9 @@ const SERVER_PORT = process.env.SERVER_PORT || 3001;
 const CLIENT_PORT = 5173;
 
 const corsConfig = {
-  origin: [`http://localhost:${CLIENT_PORT}`]
-}
+  origin: [
+    `http://localhost:${CLIENT_PORT}`],
+};
 
 
 app.use(cors(corsConfig))

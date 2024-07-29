@@ -1,17 +1,18 @@
-import {FC, useEffect, useState} from "react";
+import {FC, useEffect, useState, Dispatch, SetStateAction} from "react";
 import TodoCard from "./TodoCard";
 import AddTodo from "./AddTodo"
 import {useParams, useNavigate} from "react-router-dom";
-import {deleteTodo, getGoalById, updateGoal} from "../ApiServices";
+import {deleteTodo, getGoalById, updateGoal, updateTodo} from "../ApiServices";
 import {Todo, Goal} from '../Types'
 import {IconContext} from "react-icons";
 import {IoIosArrowBack} from "react-icons/io";
 
 
 interface props {
+  setGoals: Dispatch<SetStateAction<Goal[]>>
 }
 
-const GoalDetail: FC<props> = (): JSX.Element => {
+const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
   const navigate = useNavigate();
 
   const initialGoalState = {Todos: []} // ^solution? can't set empty with type or I can't map over todos
@@ -35,15 +36,33 @@ const GoalDetail: FC<props> = (): JSX.Element => {
       if (isCompleted !== goal.isCompleted) setIsCompleted(true)
     }
     fetchGoal()
-  }, [isAddTodo]) // ! id removed
-  console.log(goal, 'goal')
+  }, [isAddTodo]) // ! id removed // not optimal to refetch - maybe work with state
 
 
-  // filter todos by completed vs. not completed
+  // filter todos by completion
   if (goal.Todos.length > 0) {
     completedTodos = goal.Todos.filter((todo: Todo) => todo.isCompletedTodo)
     openTodos = goal.Todos.filter((todo: Todo) => !todo.isCompletedTodo)
     isGoalCompleted(goal);
+  }
+
+  async function handleTodoComplete (todo: Todo): Promise<void> {
+    const isCompletedTodo = !todo.isCompletedTodo;
+    const updatedTodo = {...todo, isCompletedTodo};
+    const resTodo = await updateTodo(updatedTodo)
+    // if todo is reverted to open but goal was completed -> update goal in db
+    // updatedGoal stays the old Goal or is updated after fetch
+    let updatedGoal = goal;
+    if (todo.isCompletedTodo && isCompleted) {
+      updatedGoal = await updateGoal({...goal, isCompleted: false})
+    }
+    const filteredTodos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
+    updatedGoal = {...updatedGoal, Todos: [...filteredTodos, resTodo]}
+    setGoal(updatedGoal)
+    setGoals((prev: Goal[]) => {
+      const filteredGoals = prev.filter((item: Goal) => item.id !== goal.id)
+      return [...filteredGoals, updatedGoal]
+    })
   }
 
   // list factory for both todo list types
@@ -53,7 +72,7 @@ const GoalDetail: FC<props> = (): JSX.Element => {
     // create todo list for rendering todo cards
     return sortedTodos.map((todo: Todo): JSX.Element => {
       return (
-        <TodoCard key={todo.id} todo={todo} onDelete={handleDeleteClick} setGoal={setGoal} goal={goal} todoCompleted={completed} goalCompleted={isCompleted} />
+        <TodoCard key={todo.id} todo={todo} onDelete={handleDeleteClick} handleTodoComplete={handleTodoComplete} todoCompleted={completed} />
       )
     })
   }
@@ -91,7 +110,7 @@ const GoalDetail: FC<props> = (): JSX.Element => {
                 <h1 className="text-left">
                   <span className="text-gray-400 text-sm">Your goal</span><br />
                   <div className="flex gap-x-1 items-center">
-                    <button>
+                    <button onClick={() => navigate('/')}>
                       <IconContext.Provider value={{color: 'var(--highlight-light-color)'}}>
                         <IoIosArrowBack />
                       </IconContext.Provider>

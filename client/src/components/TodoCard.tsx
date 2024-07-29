@@ -1,37 +1,20 @@
-import {FC, Dispatch, SetStateAction} from "react";
-import {Goal, Todo} from "../Types";
+import {FC} from "react";
+import {Todo} from "../Types";
 import {BsThreeDots} from "react-icons/bs";
 import {MdDone} from "react-icons/md";
 import {AiOutlineRedo} from "react-icons/ai";
 import {IconContext} from "react-icons";
 import { formatDate } from "../utils/utils";
-import {updateGoal, updateTodo} from "../ApiServices";
 
 interface props {
   todo: Todo,
-  goal: Goal,
-  onDelete: (todo: Todo) => void, // ^more elegant way?
-  setGoal: Dispatch<SetStateAction<Goal>>,
+  onDelete: (todo: Todo) => void,
   todoCompleted: boolean,
-  goalCompleted: boolean,
+  handleTodoComplete: (todo: Todo) => void
 }
 
-const TodoCard: FC<props> = ({todo, onDelete, setGoal, goal, todoCompleted, goalCompleted}): JSX.Element => {
+const TodoCard: FC<props> = ({todo, onDelete, todoCompleted, handleTodoComplete}): JSX.Element => {
 
-  async function handleCompleteTodo (todo: Todo) {
-    const isCompletedTodo = !todo.isCompletedTodo;
-    const updatedTodo = {...todo, isCompletedTodo};
-    const resTodo = await updateTodo(updatedTodo)
-    // if todo is reverted to open but goal was completed -> update goal in db
-    // updatedGoal stays the old Goal or is updated after fetch
-    let updatedGoal = goal;
-    if (todo.isCompletedTodo && goalCompleted) {
-      updatedGoal = await updateGoal({...goal, isCompleted: false})
-    }
-    const filteredTodos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
-    setGoal({...updatedGoal, Todos: [...filteredTodos, resTodo]})
-
-  }
 
   return (
     <>
@@ -51,7 +34,7 @@ const TodoCard: FC<props> = ({todo, onDelete, setGoal, goal, todoCompleted, goal
                 <p>{formatDate(todo.dueDateTodo)}</p>
               </div>
             </div>
-            <button onClick={() => handleCompleteTodo(todo)} className="p2 w-9 h-9 rounded-full bg-white/60">
+            <button onClick={() => handleTodoComplete(todo)} className="p2 w-9 h-9 rounded-full bg-white/60">
               <IconContext.Provider value={{color: 'grey'}}>
                 <AiOutlineRedo className="m-auto"/>
               </IconContext.Provider>
@@ -74,7 +57,7 @@ const TodoCard: FC<props> = ({todo, onDelete, setGoal, goal, todoCompleted, goal
                 <p>{formatDate(todo.dueDateTodo)}</p>
               </div>
             </div>
-            <button onClick={() => handleCompleteTodo(todo)} className="p2 w-9 h-9 rounded-full bg-[color:var(--highlight-dark-color)]">
+            <button onClick={() => handleTodoComplete(todo)} className="p2 w-9 h-9 rounded-full bg-[color:var(--highlight-dark-color)]">
               <MdDone className="m-auto" />
             </button>
           </div>
