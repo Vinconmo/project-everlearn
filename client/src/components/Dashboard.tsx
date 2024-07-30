@@ -1,8 +1,6 @@
 import {FC, Dispatch, SetStateAction} from "react";
 import {Goal} from "../Types";
 import GoalCard from "./GoalCard";
-import AddGoal from "./AddGoal";
-
 
 interface props {
   goals: Goal[], // ^not used atm
@@ -13,7 +11,7 @@ interface props {
   openGoals: Goal[],
 }
 
-const Dashboard: FC<props> = ({isAddGoal, setIsAddGoal, openGoals, completedGoals, setGoals}): JSX.Element => {
+const Dashboard: FC<props> = ({setIsAddGoal, openGoals, completedGoals, setGoals}): JSX.Element => {
 
   // list factory for both goal list types
   function createGoalList (goals: Goal[]): JSX.Element[] {
@@ -66,9 +64,7 @@ const Dashboard: FC<props> = ({isAddGoal, setIsAddGoal, openGoals, completedGoal
         </div>
 
       </div>
-      {
-        isAddGoal && <AddGoal setIsAddGoal={setIsAddGoal} />
-      }
+
 
     </>
   );

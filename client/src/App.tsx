@@ -6,6 +6,7 @@ import Navbar from './components/Navbar'
 import Dashboard from './components/Dashboard'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import GoalDetail from './components/GoalDetail'
+import AddGoal from './components/AddGoal'
 
 
 const App: FC = (): JSX.Element => {
@@ -40,7 +41,10 @@ const App: FC = (): JSX.Element => {
     <>
       <div className='flex w-full '>
         <Navbar setIsAddGoal={setIsAddGoal} />
-        <RouterProvider router={router}/>
+        <RouterProvider router={router} />
+        {
+          isAddGoal && <AddGoal setIsAddGoal={setIsAddGoal} />
+        }
       </div>
     </>
   )
