@@ -81,6 +81,17 @@ progress[value]::-webkit-progress-value {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Adjust width as needed */
+  height: 8px; /* Adjust height as needed */
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(93, 93, 233, 0.5); /* Adjust color as needed */
+  border-radius: 4px;
+}
+
 
 /*
 a {

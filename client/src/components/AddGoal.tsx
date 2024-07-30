@@ -49,7 +49,7 @@ const AddGoal: FC<props> = ({setIsAddGoal}): JSX.Element => {
 
   return (
     <>
-      <div className="absolute bg-black/70 w-screen h-screen flex items-center">
+      <div className="fixed bg-black/70 w-full h-screen flex items-center">
         <form onSubmit={(event) => handleFormSubmit(event)} className=" flex flex-col max-w-sm min-w-fit w-1/3 mx-auto bg-white p-10 rounded-md">
           <div className="mb-5 w-full">
             <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900">What would you like to learn?</label>

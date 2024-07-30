@@ -37,15 +37,15 @@ const GoalCard: FC<props> = ({goal, setGoals}): JSX.Element => {
       {
         goal.isCompleted &&
         <a onClick={() => navigate(`/goal/${goal.id}`)} className="cursor-pointer min-w-80">
-            <Card classes={{root: "relative px-2 text-left"}}>
+            <Card classes={{root: "relative px-2 text-left opacity-70"}}>
             <CardContent>
-              <h3 className="font-semibold">
+                <h3 className="font-semibold text-gray-500">
                 <span className="text-gray-400 text-xs font-medium">Goal</span><br />
                 {goal.title}
               </h3>
               <p className="relative top-2.5 text-gray-400 text-xs">{`${completedTodos.length} / ${todosNum}`}</p>
-              <progress value={progress} max="1" className="my-3"></progress>
-              <div className="flex flex-col text-left text-sm font-medium gap-y-3">
+              <progress value={progress} max="1" className="w-full my-3"></progress>
+                <div className="flex flex-col text-left text-xs font-medium text-gray-500 gap-y-3">
                 <p>
                   <span className="text-gray-400 text-xs">Completed</span><br />
                   {formatDate(goal.updatedAt)}
@@ -62,10 +62,10 @@ const GoalCard: FC<props> = ({goal, setGoals}): JSX.Element => {
       }
       {
         !goal.isCompleted &&
-        <a onClick={() => navigate(`/goal/${goal.id}`)} className="cursor-pointer min-w-80">
+        <a onClick={() => navigate(`/goal/${goal.id}`)} className="cursor-pointer min-w-80 w-[45%]">
           <Card classes={{root: "relative px-2 text-left h-full"}}>
             <CardContent>
-              <h3 className="font-semibold">
+                <h3 className="font-semibold">
                 <span className="text-gray-400 text-xs font-medium">Goal</span><br />
                 {goal.title}
               </h3>
@@ -77,13 +77,13 @@ const GoalCard: FC<props> = ({goal, setGoals}): JSX.Element => {
                   {formatDate(goal.dueDate)}
                 </p>
                 {openTodos.length > 0 &&
-                  <p>
+                  <div>
                     <span className="text-gray-400 text-xs">Next Todo</span><br />
-                    <div className="flex justify-between">
+                    <div className="flex justify-between gap-x-5">
                       <span>{sortedTodos[0].titleTodo}</span>
-                      <span className="ml-auto">{formatDate(sortedTodos[0].dueDateTodo)}</span>
+                      <span className="ml-auto text-right w-24">{formatDate(sortedTodos[0].dueDateTodo)}</span>
                     </div>
-                  </p>
+                  </div>
                 }
               </div>
               <button onClick={handleDelete} className="absolute top-2 right-2.5">

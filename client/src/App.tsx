@@ -22,7 +22,7 @@ const App: FC = (): JSX.Element => {
 
   const completedGoals = goals.filter((goal: Goal) => goal.isCompleted)
   const openGoals = goals.filter((goal: Goal) => !goal.isCompleted)
-  
+
   // ^more elegant way?
   const router = createBrowserRouter([
     {
@@ -38,7 +38,7 @@ const App: FC = (): JSX.Element => {
 
   return (
     <>
-      <div className='flex w-full'>
+      <div className='flex w-full '>
         <Navbar setIsAddGoal={setIsAddGoal} />
         <RouterProvider router={router}/>
       </div>

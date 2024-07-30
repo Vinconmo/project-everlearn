@@ -6,6 +6,7 @@ import {deleteTodo, getGoalById, updateGoal, updateTodo} from "../ApiServices";
 import {Todo, Goal} from '../Types'
 import {IconContext} from "react-icons";
 import {IoIosArrowBack} from "react-icons/io";
+import {VscWand} from "react-icons/vsc";
 import AddAiTodos from "./AddAiTodos";
 
 
@@ -36,7 +37,6 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
       setGoal(goal)
       // check completion status of goal after fetching
       if (isCompleted !== goal.isCompleted) setIsCompleted(true)
-      console.log(isCompleted)
     }
     fetchGoal()
   }, [isAddTodo]) // ! id removed // not optimal to refetch - maybe work with state
@@ -132,7 +132,12 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
                   </div>
                 </h1>
                 <div className="flex ml-auto gap-x-3">
-                  <button onClick={handleClickGenerate} className="bg-[color:var(--highlight-dark-color)] px-4 py-0.5 rounded-md"><span className="font-semibold mr-3">+</span>Generate</button>
+                  <button onClick={handleClickGenerate} className="flex items-center bg-[color:var(--highlight-dark-color)] px-4 py-0.5 rounded-md">
+                    <IconContext.Provider value={{color: 'white'}}>
+                      <VscWand className="mr-3"/>
+                    </IconContext.Provider>
+                      Generate
+                  </button>
                   <button onClick={handleClickNew} className="bg-[color:var(--highlight-light-color)] px-4 py-0.5 rounded-md"><span className="font-semibold mr-3">+</span>Add New</button>
                 </div>
               </div>

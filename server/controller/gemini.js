@@ -12,7 +12,6 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const generateTodos = async (ctx) => {
   try {
-    console.log('arrive at backend')
     const {goalId} = ctx.params;
     // capture variables from request
     const {
@@ -70,12 +69,15 @@ const generateTodos = async (ctx) => {
     const text = response.text();
     // parse response code
     const parsedPlan = extractResponseCode(text);
+    // store for returned todo posts to send back to client
+    const updatedPlan = []
     // for each todo create todo
     for (todo of parsedPlan) {
-      await postTodo(todo, goalId)
+      const resTodo = await postTodo(todo, goalId)
+      updatedPlan.push(resTodo)
     }
     ctx.status = 200;
-    ctx.body = parsedPlan;
+    ctx.body = updatedPlan;
     //
   } catch (error) {
     ctx.status = 500;
