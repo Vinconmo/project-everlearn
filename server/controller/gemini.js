@@ -12,6 +12,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const generateTodos = async (ctx) => {
   try {
+    console.log('arrive at backend')
     const {goalId} = ctx.params;
     // capture variables from request
     const {

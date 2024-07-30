@@ -6,6 +6,7 @@ import {deleteTodo, getGoalById, updateGoal, updateTodo} from "../ApiServices";
 import {Todo, Goal} from '../Types'
 import {IconContext} from "react-icons";
 import {IoIosArrowBack} from "react-icons/io";
+import AddAiTodos from "./AddAiTodos";
 
 
 interface props {
@@ -18,7 +19,8 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
   const initialGoalState = {Todos: []} // ^solution? can't set empty with type or I can't map over todos
   const [goal, setGoal] = useState<any>(initialGoalState)
   const [isAddTodo, setIsAddTodo] = useState<boolean>(false)
-  const [isCompleted, setIsCompleted] = useState<boolean>(false) //
+  const [isAddAiTodo, setIsAddAiTodo] = useState<boolean>(false)
+  const [isCompleted, setIsCompleted] = useState<boolean>(false)
 
   // get param from router & convert to number
   const params = useParams();
@@ -99,6 +101,10 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
     setIsAddTodo(true)
   }
 
+  function handleClickGenerate () {
+    setIsAddAiTodo(true)
+  }
+
   async function handleDeleteClick (todo: Todo) {
     await deleteTodo(todo)
     const Todos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
@@ -109,9 +115,9 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
   return (
     <>
       <div className={`flex flex-col pt-16 px-10 w-10/12 ${openTodos.length > 0 ? 'gap-y-8' : 'gap-y-0'}`}>
-          {
-             !isCompleted ?
-              <div className="flex flex-col px-10">
+        {
+          !isCompleted ?
+            <div className="flex flex-col px-10">
               <div className="flex mb-5 w-400 items-end">
 
                 <h1 className="text-left">
@@ -122,18 +128,21 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
                         <IoIosArrowBack />
                       </IconContext.Provider>
                     </button>
-                      {goal.title} 🚀
+                    {goal.title} 🚀
                   </div>
                 </h1>
-                  <button onClick={handleClickNew} className="ml-auto bg-[color:var(--highlight-light-color)] px-4 py-0.5 rounded-md"><span className="font-semibold mr-3">+</span>Add New</button>
+                <div className="flex ml-auto gap-x-3">
+                  <button onClick={handleClickGenerate} className="bg-[color:var(--highlight-dark-color)] px-4 py-0.5 rounded-md"><span className="font-semibold mr-3">+</span>Generate</button>
+                  <button onClick={handleClickNew} className="bg-[color:var(--highlight-light-color)] px-4 py-0.5 rounded-md"><span className="font-semibold mr-3">+</span>Add New</button>
                 </div>
-                <div className="flex flex-col gap-y-5 my-5">
-                  {
-                    createTodoList(openTodos, false)
-                  }
-                </div>
-              </div> :
-              <div className="flex flex-col px-10">
+              </div>
+              <div className="flex flex-col gap-y-5 my-5">
+                {
+                  createTodoList(openTodos, false)
+                }
+              </div>
+            </div> :
+            <div className="flex flex-col px-10">
               <div className="flex mb-5 w-400 items-end">
                 <h1 className="text-left">
                   <span className="text-gray-400 text-sm font-semibold">You reached your goal 🚀</span><br />
@@ -146,23 +155,24 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
                     {goal.title}
                   </div>
                 </h1>
-                </div>
-              </div>
-          }
-        { completedTodos.length > 0 &&
-            <div className="flex flex-col px-10">
-              <div className="flex mb-5 w-400 items-end">
-                <h2>Completed Todos 💪</h2>
-              </div>
-              <div className="flex flex-col gap-y-5">
-                {
-                  createTodoList(completedTodos, true)
-                }
               </div>
             </div>
         }
+        {completedTodos.length > 0 &&
+          <div className="flex flex-col px-10">
+            <div className="flex mb-5 w-400 items-end">
+              <h2>Completed Todos 💪</h2>
+            </div>
+            <div className="flex flex-col gap-y-5">
+              {
+                createTodoList(completedTodos, true)
+              }
+            </div>
+          </div>
+        }
       </div>
-      {isAddTodo && <AddTodo setIsAddTodo={setIsAddTodo} GoalId={goal.id}/>}
+      {isAddTodo && <AddTodo setIsAddTodo={setIsAddTodo} GoalId={goal.id} />}
+      {isAddAiTodo && <AddAiTodos setIsAddAiTodo={setIsAddAiTodo} goal={goal} setGoal={setGoal} />}
     </>
   )
 }

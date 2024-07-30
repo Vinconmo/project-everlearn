@@ -53,24 +53,24 @@ const AddTodo: FC<props> = ({setIsAddTodo, GoalId}): JSX.Element => {
   return (
     <>
       <div className="absolute bg-black/70 w-screen h-screen flex items-center">
-        <form onSubmit={(event) => handleFormSubmit(event)} className="max-w-sm min-w-fit w-1/3 mx-auto bg-white p-10 rounded-md">
-          <div className="mb-5">
+        <form onSubmit={(event) => handleFormSubmit(event)} className="flex flex-col max-w-sm min-w-fit w-1/3 mx-auto bg-white p-10 rounded-md">
+          <div className="mb-5 w-full">
             <label htmlFor="titleTodo" className="block mb-2 text-sm font-medium text-gray-900">Name your learning activity:</label>
             <input type="text" id="titleTodo" name="titleTodo" onChange={(event) => handleFormChange(event)} value={todoData.titleTodo} placeholder="YT beginners tutorial " className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
           </div>
-          <div className="mb-5">
+          <div className="mb-5 w-full">
             <label htmlFor="resource" className="block mb-2 text-sm font-medium text-gray-900">Save a link to your study material:</label>
             <input type="text" id="resource" name="resource" onChange={(event) => handleFormChange(event)} value={todoData.resource} placeholder="https://www.youtube.com/watch?v=0-S5a0eXPoc" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
           </div>
-          <div className="mb-5">
+          <div className="mb-5 w-full">
             <label htmlFor="dueDateTodo" className="block mb-2 text-sm font-medium text-gray-900">When would you like to be done?</label>
             <input type="date" id="dueDateTodo" name="dueDateTodo" onChange={(event) => handleFormChange(event)} value={todoData.dueDateTodo} placeholder={placeholder} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
           </div>
-          <div className="mb-5">
+          <div className="mb-5 w-full">
             <label htmlFor="comments" className="block mb-2 text-sm font-medium text-gray-900">When would you like to be done?</label>
             <textarea id="comments" name="comments" onChange={(event) => handleFormChange(event)} value={todoData.comments} placeholder="Leave any notes for later ..." rows={3} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
           </div>
-          <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add todo</button>
+          <button type="submit" className="self-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add todo</button>
         </form>
       </div>
     </>

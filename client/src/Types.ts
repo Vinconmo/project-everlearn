@@ -19,3 +19,15 @@ export interface Goal {
   updatedAt?: Date,
   Todos: Todo[] | [],
 }
+
+export interface TodoPlanRequestType {
+  learningGoal: string;
+  experienceLevel: string;
+  existingKnowledge: string;
+  timeline: Date;
+  frequency: string;
+  frequencyUnit: string;
+  preferredFormats: string;
+  todoUnitTime: string;
+  preferredLearningDays: string;
+}

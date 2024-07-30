@@ -18,7 +18,7 @@ router.put('/goal/todo/:todoId', todosController.updateTodo);
 router.delete('/goal/todo/:todoId', todosController.deleteTodo);
 
 // gemini routes
-router.get('/goal/:goalId/ai', geminiController.generateTodos);
+router.post('/goal/:goalId/ai', geminiController.generateTodos);
 
 router.all('/(.*)', (ctx, error) => {
   ctx.status(404)

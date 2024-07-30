@@ -1,5 +1,5 @@
 'use strict'
-import {Todo, Goal} from "./Types"
+import {Todo, Goal, TodoPlanRequestType} from "./Types"
 
 // fetch factory
 function baseFetch<T>(path: string, options: RequestInit): Promise<T> {
@@ -65,3 +65,13 @@ export const updateTodo = (todo: Todo): Promise<Todo> => baseFetch(`goal/todo/${
 export const deleteTodo = (todo: Todo): Promise<Todo> => baseFetch(`goal/todo/${todo.id}`, {
   method: 'DELETE',
 });
+
+// use ai route from backend
+export const generateTodos = (
+  planDetails: TodoPlanRequestType,
+  goalId: number | undefined
+): Promise<Todo[]> =>
+  baseFetch(`goal/${goalId}/ai`, {
+    method: "POST",
+    body: JSON.stringify(planDetails),
+  });

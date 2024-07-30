@@ -24,7 +24,7 @@ const TodoCard: FC<props> = ({todo, onDelete, todoCompleted, handleTodoComplete,
       {
         todoCompleted &&
         <div className="flex items-center ">
-          <Card classes={{root: "relative mr-5 px-2 text-left cursor-pointer grow 1 min-w-80"}}>
+            <Card classes={{root: "relative mr-5 px-2 text-left cursor-pointer grow 1 min-w-80 max-w-[90%]"}}>
             <CardContent>
               <h3 className="font-semibold mb-3">
                 <span className="text-gray-400 text-xs font-medium">Todo</span><br />
@@ -61,7 +61,7 @@ const TodoCard: FC<props> = ({todo, onDelete, todoCompleted, handleTodoComplete,
       {
         !todoCompleted &&
         <div className="flex items-center ">
-          <Card classes={{root: "relative mr-5 px-2 text-left cursor-pointer grow 1 min-w-80"}}>
+            <Card classes={{root: "relative mr-5 px-2 text-left cursor-pointer grow 1 min-w-80 max-w-[90%]"}}>
             <CardContent>
               <h3 className="font-semibold mb-3">
                 <span className="text-gray-400 text-xs font-medium">Todo</span><br />
