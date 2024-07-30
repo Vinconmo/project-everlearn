@@ -21,6 +21,8 @@ module.exports = (sequelize) => {
     }
   });
   // creates table relation to todo table
-  Goal.associate = db => db.Goal.hasMany(db.Todo)
+  Goal.associate = db => db.Goal.hasMany(db.Todo, {
+    onDelete: 'CASCADE', //! why is that not setting
+  })
   return Goal;
 }

@@ -38,7 +38,7 @@ const TodoCard: FC<props> = ({todo, onDelete, todoCompleted, handleTodoComplete,
                   </p>
                   <p>
                     <span className="text-gray-400 text-xs">Study material</span><br />
-                    <a href={todo.resource} target="_blank" rel="noopener noreferrer" className="text-[var(--highlight-dark-color)]">{todo.resource}</a>
+                    <span className="text-[var(--highlight-dark-color)]">{todo.resource}</span>
                   </p>
                   <p>
                     <span className="text-gray-400 text-xs">Notes</span><br />
@@ -77,7 +77,7 @@ const TodoCard: FC<props> = ({todo, onDelete, todoCompleted, handleTodoComplete,
                   </p>
                   <p>
                     <span className="text-gray-400 text-xs">Study material</span><br />
-                    <a href={todo.resource} target="_blank" rel="noopener noreferrer" className="text-[var(--highlight-light-color)]">{todo.resource}</a>
+                    <span className="text-[var(--highlight-light-color)]">{todo.resource}</span>
                   </p>
                   <p>
                     <span className="text-gray-400 text-xs">Notes</span><br />
@@ -103,50 +103,3 @@ const TodoCard: FC<props> = ({todo, onDelete, todoCompleted, handleTodoComplete,
 }
 
 export default TodoCard
-
-/*
-{
-      todoCompleted &&
-        <div className="flex items-center">
-          <div className="flex flex-col px-5 py-3 bg-white/60 rounded-md text-gray-400 mr-5 grow">
-            <div className="flex relative">
-              <p>{todo.titleTodo}</p>
-              <button onClick={() => onDelete(todo)} className="ml-auto absolute -top-1.5 -right-1">
-                <IconContext.Provider value={{color: 'grey'}}>
-                  <BsThreeDots />
-                </IconContext.Provider>
-              </button>
-            </div>
-            <div className="flex flex-col items-start">
-              <p>{formatDate(todo.dueDateTodo)}</p>
-            </div>
-          </div>
-          <button onClick={() => handleTodoComplete(todo)} className="p2 w-9 h-9 rounded-full bg-white/60">
-            <IconContext.Provider value={{color: 'grey'}}>
-              <AiOutlineRedo className="m-auto"/>
-            </IconContext.Provider>
-          </button>
-        </div>
-    }
-    {
-      !todoCompleted &&
-        <div className="flex items-center">
-          <div className="flex flex-col px-5 py-3 bg-white rounded-md text-black mr-5 grow">
-            <div className="flex relative">
-              <p>{todo.titleTodo}</p>
-              <button onClick={() => onDelete(todo)} className="ml-auto absolute -top-1.5 -right-1">
-                <IconContext.Provider value={{color: 'var(--highlight-light-color)'}}>
-                  <BsThreeDots />
-                </IconContext.Provider>
-              </button>
-            </div>
-            <div className="flex flex-col items-start">
-              <p>{formatDate(todo.dueDateTodo)}</p>
-            </div>
-          </div>
-          <button onClick={() => handleTodoComplete(todo)} className="p2 w-9 h-9 rounded-full bg-[color:var(--highlight-dark-color)]">
-            <MdDone className="m-auto" />
-          </button>
-        </div>
-    }
-*/

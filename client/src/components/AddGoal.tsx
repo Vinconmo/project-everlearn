@@ -67,7 +67,7 @@ const AddGoal: FC<props> = ({setIsAddGoal}): JSX.Element => {
           <button type="submit" className="self-center text-white bg-[color:var(--highlight-light-color)] hover:bg-[color:var(--highlight-dark-color)] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Start Planning</button>
           <div className="absolute top-2 right-2">
             <IconContext.Provider value={{color: 'var(--highlight-light-color)', size: '1.5em'}}>
-              <IoCloseOutline onClick={handleFormClose} className="cursor-pointer" />
+              <IoCloseOutline onClick={handleFormClose} className="cursor-pointer z-50" />
             </IconContext.Provider>
           </div>
         </form>

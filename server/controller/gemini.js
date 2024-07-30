@@ -38,7 +38,7 @@ const generateTodos = async (ctx) => {
     Existing Knowledge: ${existingKnowledge}
     Start date: ${startDate}
     Timeline: ${timeline}
-    Frequency: ${frequency} ${frequencyUnit}
+    Frequency: ${frequency} per ${frequencyUnit}
     Preferred Learning Formats: ${preferredFormats} (e.g., video, reading, audio)
     Todo Unit Time Length: ${todoUnitTime} hours
     Preferred Learning Weekdays: ${preferredLearningDays}
@@ -113,6 +113,7 @@ async function postTodo (todo, goalId) {
       comments,
       GoalId: goalId,
     })
+    return postedTodo
   } catch (error) {
     console.log(`Error in Gemini/postineTodo: ${error}`);
   }

@@ -8,6 +8,7 @@ import {IconContext} from "react-icons";
 import {IoIosArrowBack} from "react-icons/io";
 import {VscWand} from "react-icons/vsc";
 import AddAiTodos from "./AddAiTodos";
+import EmptyList from "./EmptyList";
 
 
 interface props {
@@ -175,6 +176,10 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
             </div>
           </div>
         }
+      {
+        goal.Todos.length === 0 &&
+        <EmptyList listName="todo" setIsAddTodo={setIsAddTodo} />
+      }
       </div>
       {isAddTodo && <AddTodo setIsAddTodo={setIsAddTodo} GoalId={goal.id} />}
       {isAddAiTodo && <AddAiTodos setIsAddAiTodo={setIsAddAiTodo} goal={goal} setGoal={setGoal} />}

@@ -28,7 +28,6 @@ interface PlanData {
 const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal}): JSX.Element => {
   // setting placeholder for HTML Date Input
   const now = new Date();
-  now.setMonth(now.getMonth() + 2, 0);
   const thisYear = now.getFullYear();
   const nextMonth = now.getMonth() + 1;
   const day = now.getDate();
@@ -44,7 +43,7 @@ const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal}): JSX.Element => 
     existingKnowledge: '',
     startDate: placeholder,
     frequency: '',
-    frequencyUnit: '',
+    frequencyUnit: 'week',
     preferredFormats: '',
     todoUnitTime: '',
     preferredLearningDays: []
@@ -80,6 +79,7 @@ const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal}): JSX.Element => 
     }
     // call model with model parameter & id
     const todos: Todo[] | [] = await generateTodos(modelParams, goal.id)
+    console.log('todos', todos)
     // add todos to goal after call
     setGoal((prev: Goal) => {
       const currTodos = goal.Todos
@@ -141,7 +141,7 @@ const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal}): JSX.Element => 
               <label htmlFor="frequency" className="block mb-2 text-sm font-medium text-gray-900">How frequent would you like to study?</label>
               <div className="flex gap-x- mb-5 w-full">
                 <div className="flex items-center gap-x-2 text-black text-sm mr-5">
-                  <input type="text" id="todoUnitTime" name="todoUnitTime" onChange={(event) => handleFormChange(event)} value={planDetails.todoUnitTime} placeholder="1" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-16 p-2.5" required />
+                  <input type="number" id="todoUnitTime" name="todoUnitTime" onChange={(event) => handleFormChange(event)} value={planDetails.todoUnitTime} placeholder="1" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-16 p-2.5" required />
                   <span>hour(s)</span>
                 </div>
                 <div className="flex items-center gap-x-2 text-black text-sm mr-5">
@@ -150,7 +150,7 @@ const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal}): JSX.Element => 
                 </div>
                 <div className="flex items-center gap-x-2 text-black text-sm ml-auto">
                   <span>per</span>
-                  <select id="frequencyUnit" name="frequencyUnit" onChange={(event) => handleFormChange(event)} value={planDetails.frequencyUnit} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-20 p-2.5">
+                  <select id="frequencyUnit" name="frequencyUnit" onChange={(event) => handleFormChange(event)} value={planDetails.frequencyUnit} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-20 p-2.5" required>
                     <option value="week">Week</option>
                     <option value="month">Month</option>
                   </select>
@@ -199,7 +199,7 @@ const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal}): JSX.Element => 
             <button type="submit" className="self-center sticky bottom-0 text-white bg-[color:var(--highlight-light-color)] hover:bg-[color:var(--highlight-dark-color)] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Generate plan</button>
             <div className="absolute top-2 right-2">
               <IconContext.Provider value={{color: 'var(--highlight-light-color)', size: '1.5em'}}>
-                <IoCloseOutline onClick={handleFormClose} className="cursor-pointer" />
+                <IoCloseOutline onClick={handleFormClose} className="cursor-pointer z-50" />
               </IconContext.Provider>
             </div>
           </form>
