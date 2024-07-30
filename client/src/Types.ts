@@ -24,6 +24,7 @@ export interface TodoPlanRequestType {
   learningGoal: string;
   experienceLevel: string;
   existingKnowledge: string;
+  startDate: string;
   timeline: Date;
   frequency: string;
   frequencyUnit: string;

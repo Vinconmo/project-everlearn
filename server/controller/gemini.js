@@ -18,6 +18,7 @@ const generateTodos = async (ctx) => {
       learningGoal,
       experienceLevel,
       existingKnowledge,
+      startDate,
       timeline,
       frequency,
       frequencyUnit,
@@ -33,8 +34,9 @@ const generateTodos = async (ctx) => {
     Create a structured learning plan based on the following user input:
 
     Learning Goal: ${learningGoal}
-    Experience Level: ${experienceLevel}
+    Experience Level: ${experienceLevel}, on a scale from 1 = complete beginner to 10 = expert
     Existing Knowledge: ${existingKnowledge}
+    Start date: ${startDate}
     Timeline: ${timeline}
     Frequency: ${frequency} ${frequencyUnit}
     Preferred Learning Formats: ${preferredFormats} (e.g., video, reading, audio)
