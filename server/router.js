@@ -3,6 +3,7 @@
 const router = require('@koa/router')();
 const goalsController = require('./controller/goals');
 const todosController = require('./controller/todos');
+const geminiController = require('./controller/gemini')
 
 // goal routes
 router.get('/goal', goalsController.getAll);
@@ -15,7 +16,9 @@ router.delete('/goal/:goalId', goalsController.deleteGoal);
 router.post('/goal/:goalId', todosController.postTodo);
 router.put('/goal/todo/:todoId', todosController.updateTodo);
 router.delete('/goal/todo/:todoId', todosController.deleteTodo);
-router.get('/goal/:goalId/ai', todosController.getAiTodos);
+
+// gemini routes
+router.get('/goal/:goalId/ai', geminiController.generateTodos);
 
 router.all('/(.*)', (ctx, error) => {
   ctx.status(404)
