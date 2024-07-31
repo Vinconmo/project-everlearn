@@ -2,21 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-// import Dashboard from './components/Dashboard'
-// import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-// import GoalDetail from './components/GoalDetail'
 
-// TODO: experiment router
-// const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <App />
-//   },
-// ])
-
+// TODO: Built router on this level
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    {/* <RouterProvider router={router}></RouterProvider> */}
     <App/>
   </React.StrictMode>,
 )

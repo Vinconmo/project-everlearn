@@ -1,6 +1,6 @@
 import {ChangeEvent, FC, FormEvent, useState, Dispatch, SetStateAction} from "react";
 import {generateTodos} from "../ApiServices";
-import {Goal, Todo} from "../Types";
+import {Goal} from "../Types";
 import {Grid} from 'react-loader-spinner';
 import {Slider, Checkbox, FormControlLabel, Typography} from '@mui/material';
 import {IconContext} from "react-icons";
@@ -9,7 +9,8 @@ import {IoCloseOutline} from "react-icons/io5";
 interface props {
   setIsAddAiTodo: Dispatch<SetStateAction<boolean>>,
   goal: Goal,
-  setGoal: Dispatch<SetStateAction<Goal>>
+  setGoal: Dispatch<SetStateAction<Goal>>,
+  setGoals: Dispatch<SetStateAction<Goal[]>>,
 }
 
 interface PlanData {
@@ -24,8 +25,7 @@ interface PlanData {
   preferredLearningDays: string[]
 }
 
-// Todo: pass down goal id
-const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal}): JSX.Element => {
+const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal, setGoals}): JSX.Element => {
   // setting placeholder for HTML Date Input
   const now = new Date();
   const thisYear = now.getFullYear();
@@ -51,7 +51,7 @@ const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal}): JSX.Element => 
   const [planDetails, setPlanDetails] = useState<PlanData>(initialPlanDetails)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  function handleFormChange (event: ChangeEvent | Event) { // ! check type
+  function handleFormChange (event: ChangeEvent | Event) {
     event.preventDefault();
     setPlanDetails((prev: PlanData) => ({
       ...prev,
@@ -64,7 +64,6 @@ const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal}): JSX.Element => 
     event.preventDefault();
     setIsLoading(true)
     const {learningGoalDesc, experienceLevel, startDate, existingKnowledge, frequency, frequencyUnit, preferredFormats, todoUnitTime, preferredLearningDays} = planDetails
-    //!
     const modelParams = {
       learningGoal: `General goal: ${goal.title}. Goal details: ${learningGoalDesc}`,
       experienceLevel,
@@ -78,14 +77,18 @@ const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal}): JSX.Element => 
       preferredLearningDays: preferredLearningDays.join(',')
     }
     // call model with model parameter & id
-    const todos: Todo[] | [] = await generateTodos(modelParams, goal.id)
-    console.log('todos', todos)
-    // add todos to goal after call
-    setGoal((prev: Goal) => {
-      const currTodos = goal.Todos
-      const newTodos: Todo[] = (currTodos as Todo[]).concat((todos as Todo[]))
-      return {...prev, Todos: newTodos}
-    })
+    const todos = await generateTodos(modelParams, goal.id)
+    if (todos) {
+      // add todos to goal after call
+      setGoals((prev: Goal[]) => {
+        const [currGoal] = prev.filter((el: Goal) => el.id === goal.id)
+        const otherGoals = prev.filter((el: Goal) => el.id !== goal.id)
+        const currTodos = currGoal.Todos
+        const updatedGoal = {...currGoal, Todos: [...currTodos, ...todos]}
+        setGoal(updatedGoal)
+        return [...otherGoals, updatedGoal]
+      })
+    } else console.log('Error generating new todos in AddAiTodos')
     setIsAddAiTodo(false)
     setIsLoading(false)
   }

@@ -1,4 +1,4 @@
-import {FC} from "react";
+import {FC, MouseEvent} from "react";
 import {Todo} from "../Types";
 import {BsThreeDots} from "react-icons/bs";
 import {MdDone} from "react-icons/md";
@@ -10,7 +10,7 @@ import {Card, CardContent} from '@mui/material';
 
 interface props {
   todo: Todo,
-  onDelete: (todo: Todo) => void,
+  onDelete: (e: MouseEvent<HTMLButtonElement>, todo: Todo) => void,
   todoCompleted: boolean,
   handleTodoComplete: (todo: Todo) => void
   handleTodoRecover: (todo: Todo) => void
@@ -45,7 +45,7 @@ const TodoCard: FC<props> = ({todo, onDelete, todoCompleted, handleTodoComplete,
                     {todo.comments}
                   </p>
                 </div>
-                <button onClick={() => onDelete(todo)} className="absolute top-2 right-2.5">
+                <button onClick={(event) => onDelete(event, todo)} className="absolute top-2 right-2.5">
                   <IconContext.Provider value={{color: 'grey'}}>
                     <BsThreeDots />
                   </IconContext.Provider>
@@ -84,7 +84,7 @@ const TodoCard: FC<props> = ({todo, onDelete, todoCompleted, handleTodoComplete,
                     {todo.comments}
                   </p>
                 </div>
-                <button onClick={() => onDelete(todo)} className="absolute top-2 right-2.5">
+                <button onClick={(event) => onDelete(event, todo)} className="absolute top-2 right-2.5">
                   <IconContext.Provider value={{color: 'var(--highlight-light-color)'}}>
                     <BsThreeDots />
                   </IconContext.Provider>

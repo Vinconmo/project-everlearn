@@ -2,9 +2,12 @@ import {ChangeEvent, FC, FormEvent, useState, Dispatch, SetStateAction} from "re
 import {postTodo} from "../ApiServices";
 import {IconContext} from "react-icons";
 import {IoCloseOutline} from "react-icons/io5";
+import {Goal} from "../Types";
 
 interface props {
   setIsAddTodo: Dispatch<SetStateAction<boolean>>,
+  setGoal: Dispatch<SetStateAction<Goal>>,
+  setGoals: Dispatch<SetStateAction<Goal[]>>,
   GoalId: number,
 }
 
@@ -16,9 +19,7 @@ interface TodoData {
   GoalId: number,
 }
 
-// TODO: color background
-// Todo: pass down goal id
-const AddTodo: FC<props> = ({setIsAddTodo, GoalId}): JSX.Element => {
+const AddTodo: FC<props> = ({setIsAddTodo, GoalId, setGoal, setGoals}): JSX.Element => {
   // setting placeholder for HTML Date Input
   const now = new Date();
   now.setMonth(now.getMonth() + 2, 0);
@@ -46,7 +47,17 @@ const AddTodo: FC<props> = ({setIsAddTodo, GoalId}): JSX.Element => {
     event.preventDefault();
     // convert HTML Input into Date object
     const dueDateTodo = new Date(todoData.dueDateTodo)
-    await postTodo({...todoData, dueDateTodo}, GoalId)
+    const todo = await postTodo({...todoData, dueDateTodo}, GoalId)
+    if (todo) {
+      setGoals((prev: Goal[]) => {
+        const [currGoal] = prev.filter((goal: Goal) => goal.id === GoalId)
+        const otherGoals = prev.filter((goal: Goal) => goal.id !== GoalId)
+        const currTodos = currGoal.Todos
+        const updatedGoal = {...currGoal, Todos: [...currTodos, todo]}
+        setGoal(updatedGoal)
+        return [...otherGoals, updatedGoal]
+      })
+    }
     setTodoData(initialTodoData)
     // set state to return to Goal Details
     setIsAddTodo(false)

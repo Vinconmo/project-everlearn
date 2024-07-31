@@ -5,7 +5,6 @@ const db = require("../db");
 const generateTodos = async (ctx) => {
   try {
     const {goalId} = ctx.params;
-    // capture variables from request
     const {
       learningGoal,
       experienceLevel,
@@ -19,6 +18,8 @@ const generateTodos = async (ctx) => {
       preferredLearningDays
     } = ctx.request.body
 
+    console.log(ctx.request.body)
+
     // fetch from AI
     const prompt = `
     Create a structured learning plan based on the following user input:
@@ -31,7 +32,7 @@ const generateTodos = async (ctx) => {
     Frequency: ${frequency} per ${frequencyUnit}
     Preferred Learning Formats: ${preferredFormats} (e.g., video, reading, audio)
     Todo Unit Time Length: ${todoUnitTime} hours
-    Preferred Learning Weekdays: ${preferredLearningDays}
+    Preferred Learning Weekdays: ${preferredLearningDays || 'pick any days but distribute evenly'}
 
     The plan should be output as a JavaScript array of objects, where each object represents a task.
 

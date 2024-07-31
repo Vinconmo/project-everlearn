@@ -1,22 +1,23 @@
 import {ChangeEvent, FC, FormEvent, useState, Dispatch, SetStateAction} from "react";
-import {Todo} from "../Types";
+import {Todo, Goal} from "../Types";
 import {postGoal} from "../ApiServices";
 import {IconContext} from "react-icons";
 import {IoCloseOutline} from "react-icons/io5";
 
 interface props {
   setIsAddGoal: Dispatch<SetStateAction<boolean>>,
+  setGoals: Dispatch<SetStateAction<Goal[]>>,
 }
 
+// goal type with date = string and convert for value
 interface GoalData {
   title: string,
   dueDate: string,
   Todos: Todo[] | [],
 }
 
-// goal type with date and string and convert for value
 
-const AddGoal: FC<props> = ({setIsAddGoal}): JSX.Element => {
+const AddGoal: FC<props> = ({setIsAddGoal, setGoals}): JSX.Element => {
   // setting placeholder for HTML Date Input
   const now = new Date();
   now.setMonth(now.getMonth() + 2, 0);
@@ -44,10 +45,13 @@ const AddGoal: FC<props> = ({setIsAddGoal}): JSX.Element => {
     event.preventDefault();
     // convert HTML Input into Date object
     const dueDate = new Date(goalData.dueDate)
-    await postGoal({...goalData, dueDate}) // ^what if I wanted to do an error check? TS expects result to be of type Goal
-    setGoalData(initialGoalData)
-    // set state to return to Dashboard
-    setIsAddGoal(false)
+    const res = await postGoal({...goalData, dueDate})
+    if (res) {
+      setGoals((prev: Goal[]) => [...prev, res])
+      setGoalData(initialGoalData)
+      // set state to return to Dashboard
+      setIsAddGoal(false)
+    } else console.log('Error posting the goal in AddGoal')
   }
 
   const handleFormClose = () => {

@@ -27,10 +27,15 @@ const GoalCard: FC<props> = ({goal, setGoals}): JSX.Element => {
     } else console.log('Error deleting Goal in GoalCard')
   }
 
-  const completedTodos = goal.Todos.filter((todo: Todo) => todo.isCompletedTodo)
-  const openTodos = goal.Todos.filter((todo: Todo) => !todo.isCompletedTodo)
+  let completedTodos: Todo[] | [] = []
+  let openTodos: Todo[] | [] = []
+  let todosNum: number = 0
+  if (goal.Todos) {
+    completedTodos = goal.Todos.filter((todo: Todo) => todo.isCompletedTodo)
+    openTodos = goal.Todos.filter((todo: Todo) => !todo.isCompletedTodo)
+    todosNum = goal.Todos.length;
+  }
   const sortedTodos = openTodos.sort((a: Todo, b: Todo) => Date.parse(a.dueDateTodo.toString()) - Date.parse(b.dueDateTodo.toString()))
-  const todosNum = goal.Todos.length;
   const progress = completedTodos.length / (todosNum || 1)
 
 
@@ -102,21 +107,3 @@ const GoalCard: FC<props> = ({goal, setGoals}): JSX.Element => {
 }
 
 export default GoalCard
-
-
-// <div className="flex items-center">
-// < div className = "flex flex-col px-5 py-3 bg-white rounded-md text-black mr-5 grow" >
-//           <div className="flex relative">
-//             <p>{goal.title}</p>
-//             <button onClick={handleDelete} className="ml-auto absolute -top-1.5 -right-1">
-//               <IconContext.Provider value={{color: 'var(--highlight-light-color)'}}>
-//                 <BsThreeDots />
-//               </IconContext.Provider>
-//             </button>
-//           </div>
-//           <div className="flex flex-col items-start">
-//             <p>{formatDate(goal.dueDate)}</p>
-//           </div>
-//         </div >
-// <button onClick={() => navigate(`/goal/${goal.id}`)} className="p2 w-9 h-9 rounded-full bg-[color:var(--highlight-dark-color)]">{'>'}</button>
-//       </div >

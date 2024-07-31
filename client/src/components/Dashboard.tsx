@@ -4,7 +4,7 @@ import GoalCard from "./GoalCard";
 import EmptyList from "./EmptyList";
 
 interface props {
-  goals: Goal[], // ^not used atm
+  goals: Goal[],
   setIsAddGoal: Dispatch<SetStateAction<boolean>>,
   isAddGoal: boolean,
   setGoals: Dispatch<SetStateAction<Goal[]>>,

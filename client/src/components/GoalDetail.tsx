@@ -1,4 +1,4 @@
-import {FC, useEffect, useState, Dispatch, SetStateAction} from "react";
+import {FC, useEffect, useState, Dispatch, SetStateAction, MouseEvent} from "react";
 import TodoCard from "./TodoCard";
 import AddTodo from "./AddTodo"
 import {useParams, useNavigate} from "react-router-dom";
@@ -42,13 +42,12 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
       } else console.log('Error fetching goal in GoalDetail')
     }
     fetchGoal()
-  }, [isAddTodo]) // ! id removed // not optimal to refetch - maybe work with state
+  }, [])
 
   // filter todos by completion
   if (goal.Todos.length > 0) {
     completedTodos = goal.Todos.filter((todo: Todo) => todo.isCompletedTodo)
     openTodos = goal.Todos.filter((todo: Todo) => !todo.isCompletedTodo)
-    // setIsCompleted(goal.isCompleted);
   }
 
   async function handleTodoComplete (todo: Todo): Promise<void> {
@@ -61,7 +60,7 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
       updatedGoal = await updateGoal({...goal, isCompleted: true})
       setIsCompleted(true)
     }
-    setGoal(updatedGoal) // can be set in if since updated by Check
+    setGoal(updatedGoal)
     setGoals((prev: Goal[]) => {
       const filteredGoals = prev.filter((item: Goal) => item.id !== goal.id)
       return [...filteredGoals, updatedGoal]
@@ -80,7 +79,7 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
       updatedGoal = await updateGoal({...goal, isCompleted: false});
       setIsCompleted(false);
     }
-    setGoal(updatedGoal) // can be set in if since updated by Check
+    setGoal(updatedGoal)
     setGoals((prev: Goal[]) => {
       const filteredGoals = prev.filter((item: Goal) => item.id !== goal.id)
       return [...filteredGoals, updatedGoal]
@@ -108,7 +107,8 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
     setIsAddAiTodo(true)
   }
 
-  async function handleDeleteClick (todo: Todo) {
+  async function handleDeleteClick (e: MouseEvent<HTMLButtonElement>, todo: Todo) {
+    e.stopPropagation()
     await deleteTodo(todo)
     const Todos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
     setGoal((prev: Goal) => ({...prev, Todos}))
@@ -183,8 +183,8 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
         <EmptyList listName="todo" setIsAddTodo={setIsAddTodo} />
       }
       </div>
-      {isAddTodo && <AddTodo setIsAddTodo={setIsAddTodo} GoalId={goal.id} />}
-      {isAddAiTodo && <AddAiTodos setIsAddAiTodo={setIsAddAiTodo} goal={goal} setGoal={setGoal} />}
+      {isAddTodo && <AddTodo setIsAddTodo={setIsAddTodo} GoalId={goal.id} setGoal={setGoal} setGoals={setGoals} />}
+      {isAddAiTodo && <AddAiTodos setIsAddAiTodo={setIsAddAiTodo} goal={goal} setGoal={setGoal} setGoals={setGoals} />}
     </>
   )
 }

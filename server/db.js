@@ -24,21 +24,24 @@ const sequelize = new Sequelize(
 const db = {};
 
 // add all tables (model files) to db
-// ^try & catch
 (async () => {
-  const modelFiles = await readdir(join(__dirname, modelDir))
-  for (let file of modelFiles) {
-    // skip models
-    if (file !== 'gemini.js') {
-      // invoke function in each model which returns the model
-      const model = require(join(__dirname, modelDir, file))(sequelize)
-      db[model.name] = model;
-      console.log(`🧩 Model ${model.name} in database`)
+  try {
+    const modelFiles = await readdir(join(__dirname, modelDir))
+    for (let file of modelFiles) {
+      // skip models
+      if (file !== 'gemini.js') {
+        // invoke function in each model which returns the model
+        const model = require(join(__dirname, modelDir, file))(sequelize)
+        db[model.name] = model;
+        console.log(`🧩 Model ${model.name} in database`)
+      }
     }
-  }
-  // create table relations using associate method of the model
-  for (let modelName in db) {
-    if (db[modelName].associate) db[modelName].associate(db)
+    // create table relations using associate method of the model
+    for (let modelName in db) {
+      if (db[modelName].associate) db[modelName].associate(db)
+    }
+  } catch (error) {
+    console.log('Error loading model files into db: ', error)
   }
 })();
 
