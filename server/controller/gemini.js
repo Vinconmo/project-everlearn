@@ -1,14 +1,6 @@
-// const { model } = require("../model/gemini");
-require("dotenv").config();
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { model } = require("../model/gemini");
 const db = require("../db");
 
-// Access your API key as an environment variable (see "Set up your API key" above)
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-///
 
 const generateTodos = async (ctx) => {
   try {
@@ -28,8 +20,6 @@ const generateTodos = async (ctx) => {
     } = ctx.request.body
 
     // fetch from AI
-    // ! remove requirements of one resource per task
-    // ! remove requirements for resource property format
     const prompt = `
     Create a structured learning plan based on the following user input:
 
@@ -91,17 +81,6 @@ const generateTodos = async (ctx) => {
   }
 };
 
-// async function run () {
-//   console.log('started')
-//   const prompt = "Write a story about an AI and magic";
-
-//   const result = await model.generateContent(prompt);
-//   const response = await result.response;
-//   const text = response.text();
-//   console.log(text);
-// }
-
-// // run();
 
 async function postTodo (todo, goalId) {
   try {

@@ -16,10 +16,11 @@ const App: FC = (): JSX.Element => {
   useEffect(() => {
     const fetchGoals = async () => {
       const goals = await getGoals();
-      setGoals(goals)
+      if (goals) setGoals(goals) // checking here and if empty set to empty array otherwise set goal // set an alert
+      else console.log('Error fetching goals in App')
     }
     fetchGoals()
-  }, [isAddGoal]) // ! infinite re-render
+  }, [isAddGoal]) // ! infinite re-render //! without addGoal // wait for router
 
   const completedGoals = goals.filter((goal: Goal) => goal.isCompleted)
   const openGoals = goals.filter((goal: Goal) => !goal.isCompleted)

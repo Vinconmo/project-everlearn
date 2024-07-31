@@ -14,6 +14,8 @@ interface GoalData {
   Todos: Todo[] | [],
 }
 
+// goal type with date and string and convert for value
+
 const AddGoal: FC<props> = ({setIsAddGoal}): JSX.Element => {
   // setting placeholder for HTML Date Input
   const now = new Date();

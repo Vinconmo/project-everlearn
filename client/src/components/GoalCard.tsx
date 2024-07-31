@@ -19,10 +19,12 @@ const GoalCard: FC<props> = ({goal, setGoals}): JSX.Element => {
   async function handleDelete (e: MouseEvent<HTMLButtonElement>) {
     e.stopPropagation()
     const res = await deleteGoal(goal)
-    setGoals((prev: Goal[]) => {
-      const filteredGoals = prev.filter((item: Goal) => item.id !== res.id)
-      return [...filteredGoals]
-    })
+    if (res) {
+      setGoals((prev: Goal[]) => {
+        const filteredGoals = prev.filter((item: Goal) => item.id !== res.id)
+        return [...filteredGoals]
+      })
+    } else console.log('Error deleting Goal in GoalCard')
   }
 
   const completedTodos = goal.Todos.filter((todo: Todo) => todo.isCompletedTodo)

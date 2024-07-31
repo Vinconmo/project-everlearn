@@ -21,10 +21,10 @@ router.delete('/goal/todo/:todoId', todosController.deleteTodo);
 router.post('/goal/:goalId/ai', geminiController.generateTodos);
 
 router.all('/(.*)', (ctx, error) => {
-  ctx.status(404)
-  ctx.body({
+  ctx.status = 404
+  ctx.body = {
     error, msg: 'This url does not exist'
-  })
+  }
 })
 
 module.exports = router;

@@ -35,9 +35,11 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
     // fetch goal data based on id from param
     const fetchGoal = async () => {
       const goal = await getGoalById(id)
-      setGoal(goal)
-      // check completion status of goal after fetching
-      if (isCompleted !== goal.isCompleted) setIsCompleted(true)
+      if (goal) {
+        setGoal(goal)
+        // check completion status of goal after fetching
+        if (isCompleted !== goal.isCompleted) setIsCompleted(true)
+      } else console.log('Error fetching goal in GoalDetail')
     }
     fetchGoal()
   }, [isAddTodo]) // ! id removed // not optimal to refetch - maybe work with state
