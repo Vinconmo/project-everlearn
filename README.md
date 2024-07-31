@@ -12,7 +12,7 @@ Leap mind is a digital tool to manage your learning ambitions. Add learning goal
   
   - Enter a goal title and timeline to achieve your goal
     
-    ![ImageText](./assets/Add-goal.png)
+    ![Add goals](./assets/Add-goal.png)
 
 - **Track your goals**: 
   
@@ -20,7 +20,7 @@ Leap mind is a digital tool to manage your learning ambitions. Add learning goal
   
   - Each goal will keep track of its todos and their overall progress
     
-    ![ImageText](./assets/Manage-goals.png)
+    ![Manage Goals](./assets/Manage-goals.png)
 
 - **Track goal todos**: 
   
@@ -32,7 +32,7 @@ Leap mind is a digital tool to manage your learning ambitions. Add learning goal
   
   - Enter a description along with a timeline for completion, links to resources and potential notes.
     
-    ![ImageText](./assets/Add-todo.png)
+    ![Add Todos](./assets/Add-todo.png)
 
 - **Manage todos**: 
   
@@ -44,9 +44,9 @@ Leap mind is a digital tool to manage your learning ambitions. Add learning goal
   
   - Once all todos are done, the goal is completed
     
-    ![ImageText](./assets/Manage-todos.png)
+    ![Manage Todos](./assets/Manage-todos.png)
     
-    ![ImageText](./assets/Manage-todos.png)
+    ![Complete Todos and Goals](./assets/Complete-goals.png)
 
 - **Generate todos with AI**
   
@@ -56,7 +56,7 @@ Leap mind is a digital tool to manage your learning ambitions. Add learning goal
   
   - The todo list of your goal with load once the AI model populated your todos
     
-    ![ImageText](./assets/AI-generate-todos.png)
+    ![Use AI to generate Todos](./assets/AI-generate-todos.png)
 
 
 
@@ -86,7 +86,7 @@ Leap mind is a digital tool to manage your learning ambitions. Add learning goal
       
       - Add a environment variable `GEMINI_API_KEY`
       
-      - Get your api key from Gemini following their setup guide [LinkText](https://ai.google.dev/gemini-api/docs/api-key)
+      - Get your api key from Gemini following their setup guide [Gemini Docs](https://ai.google.dev/gemini-api/docs/api-key)
       
       - Assign your api key to your variable `GEMINI_API_KEY='your-api-key'`
    
