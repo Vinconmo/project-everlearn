@@ -86,7 +86,7 @@ Leap mind is a digital tool to manage your learning ambitions. Add learning goal
       
       - Add a environment variable `GEMINI_API_KEY`
       
-      - Get your api key from Gemini following their setup guide ([API-Schlüssel anfordern &nbsp;|&nbsp; Google AI for Developers &nbsp;|&nbsp; Google for Developers](https://ai.google.dev/gemini-api/docs/api-key))
+      - Get your api key from Gemini following their setup guide [LinkText](https://ai.google.dev/gemini-api/docs/api-key)
       
       - Assign your api key to your variable `GEMINI_API_KEY='your-api-key'`
    
