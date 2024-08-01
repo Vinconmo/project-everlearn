@@ -18,8 +18,8 @@ interface props {
 const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
   const navigate = useNavigate();
 
-  const initialGoalState = {Todos: []} // ^solution? can't set empty with type or I can't map over todos
-  const [goal, setGoal] = useState<any>(initialGoalState)
+  const initialGoalState = {title: '', dueDate: new Date(), Todos: []} // ^solution? can't set empty with type or I can't map over todos
+  const [goal, setGoal] = useState<Goal>(initialGoalState)
   const [isAddTodo, setIsAddTodo] = useState<boolean>(false)
   const [isAddAiTodo, setIsAddAiTodo] = useState<boolean>(false)
   const [isCompleted, setIsCompleted] = useState<boolean>(false)
@@ -53,11 +53,16 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
   async function handleTodoComplete (todo: Todo): Promise<void> {
     const isCompletedTodo = true;
     const updatedTodo = {...todo, isCompletedTodo};
-    const resTodo = await updateTodo(updatedTodo)
+    let resTodo: Todo[] | [] = [];
+    const res = await updateTodo(updatedTodo)
+    if (res) resTodo = [res];
     const filteredTodos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
-    let updatedGoal = {...goal, Todos: [...filteredTodos, resTodo]}
+    let updatedGoal = {...goal, Todos: [...filteredTodos, ...resTodo]}
     if (goal.Todos.length > 0 && !isCompleted && openTodos.length === 1) {
-      updatedGoal = await updateGoal({...goal, isCompleted: true})
+      const res = await updateGoal({...goal, isCompleted: true})
+      if (res) {
+        updatedGoal = res
+      }
       setIsCompleted(true)
     }
     setGoal(updatedGoal)
@@ -70,14 +75,19 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
   async function handleTodoRecover (todo: Todo): Promise<void> {
     const isCompletedTodo = false;
     const updatedTodo = {...todo, isCompletedTodo};
-    const resTodo = await updateTodo(updatedTodo)
+    let resTodo: Todo[] | [] = [];
+    const res = await updateTodo(updatedTodo)
+    if (res) resTodo = [res];
     const filteredTodos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
     // if todo is reverted to open but goal was completed -> update goal in db
     // updatedGoal stays the old Goal or is updated after fetch
-    let updatedGoal = {...goal, Todos: [...filteredTodos, resTodo]}
+    let updatedGoal = {...goal, Todos: [...filteredTodos, ... resTodo]}
     if (todo.isCompletedTodo && isCompleted) {
-      updatedGoal = await updateGoal({...goal, isCompleted: false});
-      setIsCompleted(false);
+      const res = await updateGoal({...goal, isCompleted: true})
+      if (res) {
+        updatedGoal = res
+      }
+      setIsCompleted(false)
     }
     setGoal(updatedGoal)
     setGoals((prev: Goal[]) => {

@@ -2,13 +2,13 @@ import {ChangeEvent, FC, FormEvent, useState, Dispatch, SetStateAction} from "re
 import {postTodo} from "../ApiServices";
 import {IconContext} from "react-icons";
 import {IoCloseOutline} from "react-icons/io5";
-import {Goal} from "../Types";
+import {Goal, Todo} from "../Types";
 
 interface props {
   setIsAddTodo: Dispatch<SetStateAction<boolean>>,
   setGoal: Dispatch<SetStateAction<Goal>>,
   setGoals: Dispatch<SetStateAction<Goal[]>>,
-  GoalId: number,
+  GoalId: number | undefined,
 }
 
 interface TodoData {
@@ -16,7 +16,7 @@ interface TodoData {
   dueDateTodo: string,
   resource: string,
   comments: string,
-  GoalId: number,
+  GoalId: number | undefined,
 }
 
 const AddTodo: FC<props> = ({setIsAddTodo, GoalId, setGoal, setGoals}): JSX.Element => {
@@ -36,7 +36,6 @@ const AddTodo: FC<props> = ({setIsAddTodo, GoalId, setGoal, setGoals}): JSX.Elem
   const [todoData, setTodoData] = useState<TodoData>(initialTodoData)
 
   function handleFormChange (event: ChangeEvent) {
-    event.preventDefault();
     setTodoData((prev: TodoData) => ({
       ...prev,
       [(event.target as HTMLInputElement).name]: (event.target as HTMLInputElement).value,
@@ -47,20 +46,25 @@ const AddTodo: FC<props> = ({setIsAddTodo, GoalId, setGoal, setGoals}): JSX.Elem
     event.preventDefault();
     // convert HTML Input into Date object
     const dueDateTodo = new Date(todoData.dueDateTodo)
-    const todo = await postTodo({...todoData, dueDateTodo}, GoalId)
-    if (todo) {
-      setGoals((prev: Goal[]) => {
-        const [currGoal] = prev.filter((goal: Goal) => goal.id === GoalId)
-        const otherGoals = prev.filter((goal: Goal) => goal.id !== GoalId)
-        const currTodos = currGoal.Todos
-        const updatedGoal = {...currGoal, Todos: [...currTodos, todo]}
-        setGoal(updatedGoal)
-        return [...otherGoals, updatedGoal]
-      })
-    }
-    setTodoData(initialTodoData)
-    // set state to return to Goal Details
-    setIsAddTodo(false)
+    let todo: Todo;
+    if (GoalId) {
+      const res = await postTodo({...todoData, dueDateTodo}, GoalId)
+      if (res) {
+        todo = res;
+        setGoals((prev: Goal[]) => {
+          const [currGoal] = prev.filter((goal: Goal) => goal.id === GoalId)
+          const otherGoals = prev.filter((goal: Goal) => goal.id !== GoalId)
+          const currTodos = currGoal.Todos
+          const updatedGoal = {...currGoal, Todos: [...currTodos, todo]}
+          setGoal(updatedGoal)
+          return [...otherGoals, updatedGoal]
+        })
+        setTodoData(initialTodoData)
+        // set state to return to Goal Details
+        setIsAddTodo(false)
+
+      }
+    } else alert('Error connecting todo with a goal. Please go back to your dashboard an retry')
   }
 
   const handleFormClose = () => {

@@ -7,7 +7,7 @@ export interface Todo {
   comments: string,
   createdAt?: Date,
   updatedAt?: Date,
-  GoalId: number, // ^optional?
+  GoalId?: number,
 }
 
 export interface Goal {
