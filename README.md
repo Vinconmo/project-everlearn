@@ -1,8 +1,14 @@
-![Leapmind](./client/src/assets/leapmind-high-resolution-logo-transparent.png)
+<h1 align="center">
+  <img src="./client/src/assets/leapmind-high-resolution-logo-transparent.png" alt="Leapmind" width="300"/>
+</h1>
 
-Leap mind is a digital tool to manage your learning ambitions. Add learning goals and tasks/todos to your goals to keep track of all things you want to study further to come closer to your goal. Leapmind also helps you get started learning things you don't know how to start. Simply add a goal and let Leapmind AI generate learning activities for you based on your preferences.
+Leapmind is a web- and AI-based todo app for personal learning plans. It allows you to plan your personal learning journey with the help of AI as well as manage and track goal-related learning activities. 
 
+## The app
 
+<p align="center">
+  <img src="./assets/leapmind-presentation.png" alt="Leapmind App" width="300"/>
+</p>
 
 ## How it works
 
