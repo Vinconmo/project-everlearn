@@ -4,11 +4,91 @@
 
 Leapmind is a web- and AI-based todo app for personal learning plans. It allows you to plan your personal learning journey with the help of AI as well as manage and track goal-related learning activities. 
 
-## The app
 
+
+## The app
 <p align="center">
-  <img src="./assets/leapmind-presentation.png" alt="Leapmind App" width="300"/>
+  <img src="./assets/Mock-leapmind-removebg.png" alt="Leapmind App"/>
 </p>
+
+
+
+## Getting started
+
+1. Regularls: Make sure you have installed on your local machine `nodeJs` `v22.3+` as a runtime environment, the package manager `npm` and `git`.
+
+2. Database: Install and set up [postgreSQL](https://www.postgresql.org/download/) as your database on your local machine or any other database of your choice that is compatible with [Sequelize](https://sequelize.org/)
+
+3. Google Api: Login into our Google Developer account or set one up and get your api key from Gemini following their setup guide [Gemini Docs](https://ai.google.dev/gemini-api/docs/api-key)
+
+
+
+## Install and run the app:
+
+1. Fork this repo into your GitHub
+
+2. Clone your fork onto your local machine using
+   
+   1. If you wish to load the project into a new directory, create one first
+   
+   2. In your terminal navigate into your desired directory for this project and load your forked repository to you local machine
+      ```bash
+      cd <your-directory-name>
+      git clone <link_to_your_forked_repo>`
+      ```
+
+3. Install dependencies
+   
+   1. Navigate in your terminal into the `/server` directory and install dependencies from npm
+      ```bash
+      cd server
+      npm i
+      cd ..         # ! navigates back to root directory !
+      ```
+   
+   2. Navigate in your terminal into the `/client` directory and install dependencies from npm
+      ```bash
+      cd client   
+      npm i
+      cd ..          # ! navigates back to root directory !
+      ```
+
+4. Setup environment variables
+   1. Create a `.env` file in the `/server` directory
+
+   2. Add API key for Gemini
+      
+      - Add a environment variable `GEMINI_API_KEY`
+      
+      - Assign your api key to your variable `GEMINI_API_KEY='your-api-key'`
+   
+   3. Add your database connection variables
+      
+      - Add environment variables `DB_USERNAME`, `DB_PASSWORD` and optionally if you prefer different settings: `DB_PORT`, `DB_HOST`
+        
+      - Assign each variable the corresponding details for your version and connection of database
+
+6. Start the app
+   
+   1. Start your backend: 
+      ```bash
+      cd server   
+      node index.js    # ! you can use nodemon instead of node if you have it installed !
+      cd ..            # ! navigates back to root directory !
+      ```
+      
+      **NOTE**: You should see messages logged to your console confirming your connection to the database and your server
+   
+   3. Start your frontend: Open a new terminal window and run the following code from your current directory (`/server`)
+      ```bash
+      cd ..            # ! navigates back to root directory !
+      cd client
+      npm run dev
+      ```
+      
+      **NOTE**: Your editor should prompt you to open the app in the browser or simply enter `http://localhost:<your_port>` into the browser. You should see the app now.
+
+
 
 ## How it works
 
@@ -66,70 +146,24 @@ Leapmind is a web- and AI-based todo app for personal learning plans. It allows 
 
 
 
-## How to install and make it run locally:
-
-1. Fork this repo into your GitHub
-
-2. Clone your fork onto your local machine using
-   
-   1. If you wish to load the project into a new directory, create one first
-   
-   2. In your terminal navigate into your desired directory for this project
-   
-   3. Inside the directory, load your forked repository to you local machine using `git clone <link_to_your_forked_repo>`
-
-3. Install dependencies
-   
-   1. Navigate in your terminal into the `/server` directory and use `npm i`to install dependencies
-   
-   2. Navigate in your terminal into the `/client` directory and use `npm i`to install dependencies
-
-4. Setup environment variables
-   
-   1. Add API key for Gemini
-      
-      - Create a `.env` file in the `/server` directory
-      
-      - Add a environment variable `GEMINI_API_KEY`
-      
-      - Get your api key from Gemini following their setup guide [Gemini Docs](https://ai.google.dev/gemini-api/docs/api-key)
-      
-      - Assign your api key to your variable `GEMINI_API_KEY='your-api-key'`
-   
-   2. Add your database connection variables
-      
-      - Setup your PostgreSQL database (local or cloud) following the start guide of your provider
-      
-      - Add environment variables `DB_USERNAME`, `DB_PASSWORD` and optionally if you prefer different settings: `DB_PORT`, `DB_HOST`. Assign each variable the corresponding details for your version and connection of database
-
-5. Start the app
-   
-   1. Start your backend: In your terminal, navigate to the `/server` directory and run `node index.js` (or use nodemon instead of node if you have installed).
-      
-      **NOTE**: You should see messages logged to your console confirming your connection to the database and your server
-   
-   2. Start your frontend: In another terminal window, navigate to the `/client` directory and run `npm run dev`
-      
-      **NOTE**: Your editor should prompt you to open the app in the browser or simply enter `http://localhost:<your_port>` into the browser. You should see the app now.
-
 ## Tech Stack
 
-- Frontend (written in TypeScript)
+- Frontend (in TypeScript)
   
-  1. React with vite
+  1. React + vite
   
-  2. Tailwind css for styling
+  2. Tailwind css & vanilla css: styling
   
-  3. Material UI for some components
+  3. Material UI: form components
   
-  4. React-icons for icons
+  4. React-icons: icons
 
-- Backend (written in JavaScript)
+- Backend (in JavaScript)
   
-  1. Koa server
+  1. Koa server (incl. koa router, bodyparser & cors)
   
   2. PostgreSQL
   
-  3. Sequielize as the orm for Postgres
+  3. Sequelize (postgres orm)
   
-  4. Gemini AI
+  4. Gemini AI (Google)
