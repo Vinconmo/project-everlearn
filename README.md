@@ -58,7 +58,7 @@ Leapmind is a web- and AI-based todo app for personal learning plans. It allows 
 
    2. Add API key for Gemini
       
-      - Add a environment variable `GEMINI_API_KEY`
+      - Add an environment variable `GEMINI_API_KEY`
       
       - Assign your api key to your variable `GEMINI_API_KEY='your-api-key'`
    
