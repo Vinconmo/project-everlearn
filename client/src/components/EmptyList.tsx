@@ -1,12 +1,10 @@
 import {FC, Dispatch, SetStateAction} from "react";
 
-
 interface props {
   listName: string,
   setIsAddGoal?: Dispatch<SetStateAction<boolean>>,
   setIsAddTodo?: Dispatch<SetStateAction<boolean>>,
 }
-
 
 const EmptyList: FC<props> = ({listName, setIsAddGoal, setIsAddTodo}): JSX.Element => {
 

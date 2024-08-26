@@ -1,24 +1,14 @@
-import {FC, Dispatch, SetStateAction} from "react";
-import {Goal} from "../Types";
+import {FC} from "react";
+import {AppContext, Goal} from "../Types";
 import GoalCard from "./GoalCard";
 import EmptyList from "./EmptyList";
+import {useOutletContext} from "react-router-dom";
 
-interface props {
-  goals: Goal[],
-  setIsAddGoal: Dispatch<SetStateAction<boolean>>,
-  isAddGoal: boolean,
-  setGoals: Dispatch<SetStateAction<Goal[]>>,
-  completedGoals: Goal[],
-  openGoals: Goal[],
-}
-
-const Dashboard: FC<props> = ({setIsAddGoal, openGoals, completedGoals, setGoals, goals}): JSX.Element => {
-
-  // list factory for both goal list types
+const Dashboard: FC = (): JSX.Element => {
+  const {goals, setGoals, setIsAddGoal, completedGoals, openGoals} = useOutletContext() as AppContext
+  // list factory for goal cards
   function createGoalList (goals: Goal[]): JSX.Element[] {
-    // sort goal list by date
     const sortedGoals = goals.sort((a: Goal, b: Goal) => Date.parse(a.dueDate.toString()) - Date.parse(b.dueDate.toString()))
-    // create goal list for rendering goal cards
     return sortedGoals.map((goal: Goal): JSX.Element => {
       return (
         <GoalCard key={goal.id} goal={goal} setGoals={setGoals} />

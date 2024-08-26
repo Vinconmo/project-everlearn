@@ -1,4 +1,5 @@
 'use strict';
+
 require("dotenv").config();
 const Sequelize = require('sequelize');
 const {readdir} = require('node:fs/promises')
@@ -28,7 +29,7 @@ const db = {};
   try {
     const modelFiles = await readdir(join(__dirname, modelDir))
     for (let file of modelFiles) {
-      // skip models
+      // valid model files
       if (file !== 'gemini.js') {
         // invoke function in each model which returns the model
         const model = require(join(__dirname, modelDir, file))(sequelize)

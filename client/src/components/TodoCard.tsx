@@ -7,7 +7,6 @@ import {IconContext} from "react-icons";
 import {formatDate} from "../utils/utils";
 import {Card, CardContent} from '@mui/material';
 
-
 interface props {
   todo: Todo,
   onDelete: (e: MouseEvent<HTMLButtonElement>, todo: Todo) => void,
@@ -17,7 +16,6 @@ interface props {
 }
 
 const TodoCard: FC<props> = ({todo, onDelete, todoCompleted, handleTodoComplete, handleTodoRecover}): JSX.Element => {
-
 
   return (
     <>

@@ -9,16 +9,14 @@ interface props {
   setGoals: Dispatch<SetStateAction<Goal[]>>,
 }
 
-// goal type with date = string and convert for value
 interface GoalData {
   title: string,
   dueDate: string,
   Todos: Todo[] | [],
 }
 
-
 const AddGoal: FC<props> = ({setIsAddGoal, setGoals}): JSX.Element => {
-  // setting placeholder for HTML Date Input
+  // placeholder for HTML Date Input
   const now = new Date();
   now.setMonth(now.getMonth() + 2, 0);
   const thisYear = now.getFullYear();
@@ -49,7 +47,7 @@ const AddGoal: FC<props> = ({setIsAddGoal, setGoals}): JSX.Element => {
     if (res) {
       setGoals((prev: Goal[]) => [...prev, res])
       setGoalData(initialGoalData)
-      // set state to return to Dashboard
+      // returns to Dashboard
       setIsAddGoal(false)
     } else console.log('Error posting the goal in AddGoal')
   }

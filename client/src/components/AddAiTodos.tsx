@@ -26,7 +26,7 @@ interface PlanData {
 }
 
 const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal, setGoals}): JSX.Element => {
-  // setting placeholder for HTML Date Input
+  // placeholder for HTML Date Input
   const now = new Date();
   const thisYear = now.getFullYear();
   const nextMonth = now.getMonth() + 1;
@@ -76,10 +76,9 @@ const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal, setGoals}): JSX.E
       todoUnitTime,
       preferredLearningDays: preferredLearningDays.join(',')
     }
-    // call model with model parameter & id
     const todos = await generateTodos(modelParams, goal.id)
     if (todos) {
-      // add todos to goal after call
+      // add todos from model response to goal
       setGoals((prev: Goal[]) => {
         const [currGoal] = prev.filter((el: Goal) => el.id === goal.id)
         const otherGoals = prev.filter((el: Goal) => el.id !== goal.id)
@@ -93,7 +92,6 @@ const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal, setGoals}): JSX.E
     setIsLoading(false)
   }
 
-  // handle Checkbox changes
   const handleCheckChange = (event: ChangeEvent<HTMLInputElement>) => {
     const {target} = event;
     const {name} = target;

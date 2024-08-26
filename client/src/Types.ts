@@ -1,3 +1,5 @@
+import {Dispatch, SetStateAction} from "react";
+
 export interface Todo {
   id?: number,
   titleTodo: string,
@@ -31,4 +33,13 @@ export interface TodoPlanRequestType {
   preferredFormats: string;
   todoUnitTime: string;
   preferredLearningDays: string;
+}
+
+export interface AppContext {
+  goals: Goal[];
+  setGoals: Dispatch<SetStateAction<Goal[]>>;
+  isAddGoal: boolean;
+  setIsAddGoal: Dispatch<SetStateAction<boolean>>;
+  completedGoals: Goal[];
+  openGoals: Goal[];
 }

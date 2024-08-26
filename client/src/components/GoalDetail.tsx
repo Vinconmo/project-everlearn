@@ -1,35 +1,30 @@
-import {FC, useEffect, useState, Dispatch, SetStateAction, MouseEvent} from "react";
+import {FC, useEffect, useState, MouseEvent} from "react";
 import TodoCard from "./TodoCard";
 import AddTodo from "./AddTodo"
-import {useParams, useNavigate} from "react-router-dom";
+import {useParams, useNavigate, useOutletContext} from "react-router-dom";
 import {deleteTodo, getGoalById, updateGoal, updateTodo} from "../ApiServices";
-import {Todo, Goal} from '../Types'
+import {Todo, Goal, AppContext} from '../Types'
 import {IconContext} from "react-icons";
 import {IoIosArrowBack} from "react-icons/io";
 import {VscWand} from "react-icons/vsc";
 import AddAiTodos from "./AddAiTodos";
 import EmptyList from "./EmptyList";
 
-
-interface props {
-  setGoals: Dispatch<SetStateAction<Goal[]>>
-}
-
-const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
+const GoalDetail: FC = (): JSX.Element => {
+  const {setGoals} = useOutletContext() as AppContext
   const navigate = useNavigate();
 
-  const initialGoalState = {title: '', dueDate: new Date(), Todos: []} // ^solution? can't set empty with type or I can't map over todos
+  const initialGoalState = {title: '', dueDate: new Date(), Todos: []}
   const [goal, setGoal] = useState<Goal>(initialGoalState)
   const [isAddTodo, setIsAddTodo] = useState<boolean>(false)
   const [isAddAiTodo, setIsAddAiTodo] = useState<boolean>(false)
   const [isCompleted, setIsCompleted] = useState<boolean>(false)
 
-  // get param from router & convert to number
   const params = useParams();
   const id = Number(params.goalId);
 
   let completedTodos: Todo[] | [] = [];
-  let openTodos: Todo[] | [] = []; // ^maybe state?
+  let openTodos: Todo[] | [] = [];
 
   useEffect(() => {
     // fetch goal data based on id from param
@@ -79,8 +74,7 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
     const res = await updateTodo(updatedTodo)
     if (res) resTodo = [res];
     const filteredTodos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
-    // if todo is reverted to open but goal was completed -> update goal in db
-    // updatedGoal stays the old Goal or is updated after fetch
+    // updates goal in db if all todos were completed but status of one is reverted
     let updatedGoal = {...goal, Todos: [...filteredTodos, ... resTodo]}
     if (todo.isCompletedTodo && isCompleted) {
       const res = await updateGoal({...goal, isCompleted: true})
@@ -96,11 +90,9 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
     })
   }
 
-  // list factory for both todo list types
+  // list factory for todo cards
   function createTodoList (todos: Todo[], completed: boolean): JSX.Element[] {
-    // sort todo list by date
     const sortedTodos = todos.sort((a: Todo, b: Todo) => Date.parse(a.dueDateTodo.toString()) - Date.parse(b.dueDateTodo.toString()))
-    // create todo list for rendering todo cards
     return sortedTodos.map((todo: Todo): JSX.Element => {
       return (
         <TodoCard key={todo.id} todo={todo} onDelete={handleDeleteClick} handleTodoComplete={handleTodoComplete} handleTodoRecover={handleTodoRecover} todoCompleted={completed} />
@@ -124,7 +116,6 @@ const GoalDetail: FC<props> = ({setGoals}): JSX.Element => {
     setGoal((prev: Goal) => ({...prev, Todos}))
   }
 
-  // Todo: refactor
   return (
     <>
       <div className={`flex flex-col pt-16 px-10 w-10/12 ${openTodos.length > 0 ? 'gap-y-8' : 'gap-y-0'}`}>

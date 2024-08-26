@@ -20,7 +20,7 @@ interface TodoData {
 }
 
 const AddTodo: FC<props> = ({setIsAddTodo, GoalId, setGoal, setGoals}): JSX.Element => {
-  // setting placeholder for HTML Date Input
+  // placeholder for HTML Date Input
   const now = new Date();
   now.setMonth(now.getMonth() + 2, 0);
   const thisYear = now.getFullYear();
@@ -62,7 +62,6 @@ const AddTodo: FC<props> = ({setIsAddTodo, GoalId, setGoal, setGoals}): JSX.Elem
         setTodoData(initialTodoData)
         // set state to return to Goal Details
         setIsAddTodo(false)
-
       }
     } else alert('Error connecting todo with a goal. Please go back to your dashboard an retry')
   }
