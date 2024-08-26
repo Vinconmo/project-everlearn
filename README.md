@@ -54,19 +54,38 @@ Leapmind is a web- and AI-based todo app for personal learning plans. It allows 
       ```
 
 4. Setup environment variables
-   1. Create a `.env` file in the `/server` directory
+   1. Via your terminal, create a `.env` file in the `/server` directory
+      ```bash
+      cd server
+      touch .env
+      cd ..          # ! navigates back to root directory !
+      ```
 
-   2. Add API key for Gemini
-      
-      - Add an environment variable `GEMINI_API_KEY`
-      
-      - Assign your api key to your variable `GEMINI_API_KEY='your-api-key'`
+   2. Add API key for Gemini via the terminal
+      ```bash
+      echo "GEMINI_API_KEY='your_api_key'" >> .env      # ! replace 'your_api_key' with your key created for Gemini in the Google AI Studio !
+      ```
    
-   3. Add your database connection variables
+   3. Add your database connection variables via the terminal
       
       - Add environment variables `DB_USERNAME`, `DB_PASSWORD` and optionally if you prefer different settings: `DB_PORT`, `DB_HOST`
         
       - Assign each variable the corresponding details for your version and connection of database
+     
+      ```bash
+      # ! Replace the placeholders with your actual postgres username, password, host, and port. !
+      echo "DB_USERNAME='your_username'" >> .env
+      echo "DB_PASSWORD='your_password'" >> .env
+      echo "DB_HOST='your_host'" >> .env
+      echo "DB_PORT='your_port'" >> .env
+       ```
+     
+    4. Optional: Customize your server & client port
+      ```bash
+      # ! Replace the placeholders with your actual ports !
+      echo "SERVER_PORT='your_port'" >> .env
+      echo "CLIENT_PORT='your_port'" >> .env
+      ```
 
 6. Start the app
    
