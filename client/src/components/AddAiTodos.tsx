@@ -1,59 +1,39 @@
-import {ChangeEvent, FC, FormEvent, useState, Dispatch, SetStateAction} from "react";
+import {ChangeEvent, FC, FormEvent, useState} from "react";
 import {generateTodos} from "../ApiServices";
-import {Goal} from "../Types";
+import {AiTodoForm, Goal} from "../types/DataTypes";
 import {Grid} from 'react-loader-spinner';
 import {Slider, Checkbox, FormControlLabel, Typography} from '@mui/material';
 import {IconContext} from "react-icons";
 import {IoCloseOutline} from "react-icons/io5";
+import {PropsAddAiTodo} from "../types/PropTypes";
+import {getFormFormat} from "../utils/utils";
 
-interface props {
-  setIsAddAiTodo: Dispatch<SetStateAction<boolean>>,
-  goal: Goal,
-  setGoal: Dispatch<SetStateAction<Goal>>,
-  setGoals: Dispatch<SetStateAction<Goal[]>>,
+// placeholder for HTML Date Input
+const now = new Date();
+const thisYear = now.getFullYear();
+const nextMonth = now.getMonth() + 1;
+const day = now.getDate();
+const placeholder = getFormFormat(thisYear, nextMonth, day);
+
+const initialPlanDetails = {
+  learningGoalDesc: '',
+  experienceLevel: '1',
+  existingKnowledge: '',
+  startDate: placeholder,
+  frequency: '',
+  frequencyUnit: 'week',
+  preferredFormats: '',
+  todoUnitTime: '',
+  preferredLearningDays: []
 }
 
-interface PlanData {
-  learningGoalDesc: string,
-  experienceLevel: string,
-  existingKnowledge: string,
-  startDate: string,
-  frequency: string,
-  frequencyUnit: string,
-  preferredFormats: string,
-  todoUnitTime: string,
-  preferredLearningDays: string[]
-}
-
-const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal, setGoals}): JSX.Element => {
-  // placeholder for HTML Date Input
-  const now = new Date();
-  const thisYear = now.getFullYear();
-  const nextMonth = now.getMonth() + 1;
-  const day = now.getDate();
-  const placeholder = getDateFormHtmlInput(thisYear, nextMonth, day);
-
-  function getDateFormHtmlInput (year: number, month: number, day: number): string {
-    return `${year}-${month < 10 ? 0 : ''}${month}-${day}`
-  }
-
-  const initialPlanDetails = {
-    learningGoalDesc: '',
-    experienceLevel: '1',
-    existingKnowledge: '',
-    startDate: placeholder,
-    frequency: '',
-    frequencyUnit: 'week',
-    preferredFormats: '',
-    todoUnitTime: '',
-    preferredLearningDays: []
-  }
-  const [planDetails, setPlanDetails] = useState<PlanData>(initialPlanDetails)
+const AddAiTodos: FC<PropsAddAiTodo> = ({setIsAddAiTodo, goal, setGoal, setGoals}): JSX.Element => {
+  const [planDetails, setPlanDetails] = useState<AiTodoForm>(initialPlanDetails)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   function handleFormChange (event: ChangeEvent | Event) {
     event.preventDefault();
-    setPlanDetails((prev: PlanData) => ({
+    setPlanDetails((prev: AiTodoForm) => ({
       ...prev,
       [(event.target as HTMLInputElement).name]: (event.target as HTMLInputElement).value,
     }))
@@ -98,7 +78,7 @@ const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal, setGoals}): JSX.E
     const updatedSelectedDays = planDetails.preferredLearningDays.includes(name)
       ? planDetails.preferredLearningDays.filter((day: string) => day !== name)
       : [...planDetails.preferredLearningDays, name];
-    setPlanDetails((prev: PlanData) => ({
+    setPlanDetails((prev: AiTodoForm) => ({
       ...prev,
       preferredLearningDays: updatedSelectedDays
     }))
@@ -110,7 +90,6 @@ const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal, setGoals}): JSX.E
 
   return (
     <>
-
       <div className="fixed bg-black/70 w-screen h-screen flex items-center">
         {!isLoading &&
           <form onSubmit={(event) => handleFormSubmit(event)} className="flex flex-col relative h-5/6 overflow-y-scroll custom-scrollbar max-w-2/3 min-w-fit w-1/3 mx-auto bg-white p-10 rounded-md">
@@ -123,7 +102,7 @@ const AddAiTodos: FC<props> = ({setIsAddAiTodo, goal, setGoal, setGoals}): JSX.E
               <label className="block mb-2 text-sm font-medium text-gray-900">How experience are you already in the field?<br /> <span className="text-xs text-gray-400">Rate yourself on a scale from 1 "complete beginner" to 10 "expert"</span></label>
               <div className="flex w-full justify-center">
 
-              <Slider sx={{color: 'var(--highlight-light-color)', width: '80%'}} min={1} max={10} marks={true} valueLabelDisplay="auto" className="text-xs Mui-required" name="experienceLevel" id="experienceLevel" onChange={(event) => handleFormChange(event)} />
+                <Slider sx={{color: 'var(--highlight-light-color)', width: '80%'}} min={1} max={10} marks={true} valueLabelDisplay="auto" className="text-xs Mui-required" name="experienceLevel" id="experienceLevel" onChange={(event) => handleFormChange(event)} />
               </div>
             </div>
             <div className="mb-5 w-full">

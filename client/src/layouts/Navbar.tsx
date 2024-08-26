@@ -1,31 +1,17 @@
 import brandImage from '../assets/leapmind-high-resolution-logo-transparent.png'
-import {FC, Dispatch, SetStateAction, useState, useEffect} from "react";
+import {FC, useState, useEffect} from "react";
 import {IconContext} from "react-icons";
 import {MdOutlineSpaceDashboard} from "react-icons/md";
 import {GoGoal} from "react-icons/go";
 import {FaCircleUser} from "react-icons/fa6";
 import {CgLogOut} from "react-icons/cg";
-import AddGoal from './AddGoal';
-import {Goal} from '../Types';
+import AddGoal from '../components/AddGoal';
+import {Goal} from '../types/DataTypes';
 import {Outlet} from 'react-router-dom';
 import {getGoals} from '../ApiServices';
+import {AppContext} from '../types/PropTypes';
 
-// interface props {
-//   setIsAddGoal: Dispatch<SetStateAction<boolean>>,
-// }
-
-//
-interface ContextType {
-  goals: Goal[],
-  setGoals: Dispatch<SetStateAction<Goal[]>>,
-  isAddGoal: boolean,
-  setIsAddGoal: Dispatch<SetStateAction<boolean>>,
-  completedGoals: Goal[],
-  openGoals: Goal[],
-}
-
-const Navbar: FC/* <props> */ = (/* {setIsAddGoal} */): JSX.Element => {
-  //
+const Navbar: FC = (): JSX.Element => {
   const [goals, setGoals] = useState<Goal[]>([])
   const [isAddGoal, setIsAddGoal] = useState<boolean>(false)
 
@@ -87,7 +73,7 @@ const Navbar: FC/* <props> */ = (/* {setIsAddGoal} */): JSX.Element => {
           </section>
         </div>
       </div>
-      < Outlet context={{goals, setGoals, isAddGoal, setIsAddGoal, completedGoals, openGoals} satisfies ContextType} />
+      < Outlet context={{goals, setGoals, isAddGoal, setIsAddGoal, completedGoals, openGoals} satisfies AppContext} />
       {
         isAddGoal && <AddGoal setIsAddGoal={setIsAddGoal} setGoals={setGoals} />
       }

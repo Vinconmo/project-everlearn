@@ -1,39 +1,26 @@
-import {ChangeEvent, FC, FormEvent, useState, Dispatch, SetStateAction} from "react";
-import {Todo, Goal} from "../Types";
+import {ChangeEvent, FC, FormEvent, useState} from "react";
+import {Goal, GoalForm} from "../types/DataTypes";
 import {postGoal} from "../ApiServices";
 import {IconContext} from "react-icons";
 import {IoCloseOutline} from "react-icons/io5";
+import {PropsAddGoal} from "../types/PropTypes";
+import {getFormFormat} from "../utils/utils";
 
-interface props {
-  setIsAddGoal: Dispatch<SetStateAction<boolean>>,
-  setGoals: Dispatch<SetStateAction<Goal[]>>,
-}
+// placeholder for HTML Date Input
+const now = new Date();
+now.setMonth(now.getMonth() + 2, 0);
+const thisYear = now.getFullYear();
+const nextMonth = now.getMonth() + 1;
+const day = now.getDate();
+const placeholder = getFormFormat(thisYear, nextMonth, day);
 
-interface GoalData {
-  title: string,
-  dueDate: string,
-  Todos: Todo[] | [],
-}
-
-const AddGoal: FC<props> = ({setIsAddGoal, setGoals}): JSX.Element => {
-  // placeholder for HTML Date Input
-  const now = new Date();
-  now.setMonth(now.getMonth() + 2, 0);
-  const thisYear = now.getFullYear();
-  const nextMonth = now.getMonth() + 1;
-  const day = now.getDate();
-  const placeholder = getDateFormHtmlInput(thisYear, nextMonth, day);
-
-  function getDateFormHtmlInput (year: number, month: number, day: number): string {
-    return `${year}-${month < 10 ? 0 : ''}${month}-${day}`
-  }
-
+const AddGoal: FC<PropsAddGoal> = ({setIsAddGoal, setGoals}): JSX.Element => {
   const initialGoalData = {title: '', dueDate: placeholder, Todos: []}
-  const [goalData, setGoalData] = useState<GoalData>(initialGoalData)
+  const [goalData, setGoalData] = useState<GoalForm>(initialGoalData)
 
   function handleFormChange (event: ChangeEvent) {
     event.preventDefault();
-    setGoalData((prev: GoalData) => ({
+    setGoalData((prev: GoalForm) => ({
       ...prev,
       [(event.target as HTMLInputElement).name]: (event.target as HTMLInputElement).value,
     }))

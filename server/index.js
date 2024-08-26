@@ -6,8 +6,11 @@ const bodyParser = require('koa-bodyparser');
 const db = require('./db');
 const router = require('./router');
 const app = new Koa();
-const SERVER_PORT = process.env.SERVER_PORT || 3001;
-const CLIENT_PORT = 5173;
+require('dotenv').config();
+
+
+const SERVER_PORT = process.env.SERVER_PORT || 3000;
+const CLIENT_PORT = process.env.CLIENT_PORT || 5173;
 
 const validOrigins = [
   `http://localhost:${CLIENT_PORT}`,

@@ -1,6 +1,6 @@
 'use strict';
 
-const db = require("../db");
+const db = require('../db');
 
 const postTodo = async (ctx) => {
   try {
@@ -41,20 +41,30 @@ const updateTodo = async (ctx) => {
       isCompletedTodo,
     } = ctx.request.body
     const todo = await db.Todo.findByPk(todoId)
-    // updates only values passed with request
-    if (titleTodo) todo.titleTodo = titleTodo;
-    if (dueDateTodo) todo.dueDateTodo = dueDateTodo;
-    if (resource) todo.resource = resource;
-    if (comments) todo.comments = comments;
-    if (isCompletedTodo !== undefined) todo.isCompletedTodo = isCompletedTodo;
-    const updatedTodo = await todo.save();
-    ctx.status = 200;
-    ctx.body = updatedTodo;
+    if (todo) {
+      // updates only values passed with request
+      if (titleTodo) todo.titleTodo = titleTodo;
+      if (dueDateTodo) todo.dueDateTodo = dueDateTodo;
+      if (resource) todo.resource = resource;
+      if (comments) todo.comments = comments;
+      if (isCompletedTodo !== undefined) todo.isCompletedTodo = isCompletedTodo;
+      const updatedTodo = await todo.save();
+      ctx.status = 200;
+      ctx.body = updatedTodo;
+    } else {
+      ctx.status = 400;
+      ctx.body = {
+        error: 'Invalid request',
+        msg: 'No entry with this id found',
+      };
+      console.log(`Error in todos: No entry found with id`);
+    }
   } catch (error) {
     ctx.status = 500
     ctx.body = {
-      error, msg: 'No entry with this id found'
-    }
+      error,
+      msg: 'Request failed',
+    };
     console.log(`Error in Todos/updateTodo: ${error}`)
   }
 }
@@ -63,14 +73,24 @@ const deleteTodo = async (ctx) => {
   try {
     const {todoId} = ctx.params;
     const todo = await db.Todo.findByPk(todoId)
-    await todo.destroy()
-    ctx.status = 200;
-    ctx.body = todo;
+    if (todo) {
+      await todo.destroy();
+      ctx.status = 200;
+      ctx.body = todo;
+    } else {
+      ctx.status = 400;
+      ctx.body = {
+        error: 'Invalid request',
+        msg: 'No entry with this id found',
+      };
+      console.log(`Error in todos: No entry found with id`);
+    }
   } catch (error) {
     ctx.status = 500
     ctx.body = {
-      error, msg: 'No entry with this id found'
-    }
+      error,
+      msg: 'Request failed',
+    };
     console.log(`Error in Todos/deleteTodo: ${error}`)
   }
 }

@@ -1,20 +1,23 @@
 import {FC, useEffect, useState, MouseEvent} from "react";
-import TodoCard from "./TodoCard";
-import AddTodo from "./AddTodo"
+import TodoCard from "../components/TodoCard";
+import AddTodo from "../components/AddTodo"
 import {useParams, useNavigate, useOutletContext} from "react-router-dom";
 import {deleteTodo, getGoalById, updateGoal, updateTodo} from "../ApiServices";
-import {Todo, Goal, AppContext} from '../Types'
+import {Todo, Goal} from '../types/DataTypes'
 import {IconContext} from "react-icons";
 import {IoIosArrowBack} from "react-icons/io";
 import {VscWand} from "react-icons/vsc";
-import AddAiTodos from "./AddAiTodos";
-import EmptyList from "./EmptyList";
+import AddAiTodos from "../components/AddAiTodos";
+import EmptyList from "../components/EmptyList";
+import {AppContext} from "../types/PropTypes";
+
+const initialGoalState = {title: '', dueDate: new Date(), Todos: []}
+let completedTodos: Todo[] | [] = [];
+let openTodos: Todo[] | [] = [];
 
 const GoalDetail: FC = (): JSX.Element => {
   const {setGoals} = useOutletContext() as AppContext
-  const navigate = useNavigate();
 
-  const initialGoalState = {title: '', dueDate: new Date(), Todos: []}
   const [goal, setGoal] = useState<Goal>(initialGoalState)
   const [isAddTodo, setIsAddTodo] = useState<boolean>(false)
   const [isAddAiTodo, setIsAddAiTodo] = useState<boolean>(false)
@@ -22,9 +25,6 @@ const GoalDetail: FC = (): JSX.Element => {
 
   const params = useParams();
   const id = Number(params.goalId);
-
-  let completedTodos: Todo[] | [] = [];
-  let openTodos: Todo[] | [] = [];
 
   useEffect(() => {
     // fetch goal data based on id from param
@@ -35,9 +35,11 @@ const GoalDetail: FC = (): JSX.Element => {
         // check completion status of goal after fetching
         if (isCompleted !== goal.isCompleted) setIsCompleted(true)
       } else console.log('Error fetching goal in GoalDetail')
-    }
+  }
     fetchGoal()
   }, [])
+
+  const navigate = useNavigate();
 
   // filter todos by completion
   if (goal.Todos.length > 0) {
@@ -75,7 +77,7 @@ const GoalDetail: FC = (): JSX.Element => {
     if (res) resTodo = [res];
     const filteredTodos = goal.Todos.filter((todoEl: Todo) => todoEl.id !== todo.id)
     // updates goal in db if all todos were completed but status of one is reverted
-    let updatedGoal = {...goal, Todos: [...filteredTodos, ... resTodo]}
+    let updatedGoal = {...goal, Todos: [...filteredTodos, ...resTodo]}
     if (todo.isCompletedTodo && isCompleted) {
       const res = await updateGoal({...goal, isCompleted: true})
       if (res) {
@@ -99,7 +101,6 @@ const GoalDetail: FC = (): JSX.Element => {
       )
     })
   }
-
 
   function handleClickNew () {
     setIsAddTodo(true)
@@ -138,9 +139,9 @@ const GoalDetail: FC = (): JSX.Element => {
                 <div className="flex ml-auto gap-x-3">
                   <button onClick={handleClickGenerate} className="flex items-center bg-[color:var(--highlight-dark-color)] px-4 py-0.5 rounded-md">
                     <IconContext.Provider value={{color: 'white'}}>
-                      <VscWand className="mr-3"/>
+                      <VscWand className="mr-3" />
                     </IconContext.Provider>
-                      Generate
+                    Generate
                   </button>
                   <button onClick={handleClickNew} className="bg-[color:var(--highlight-light-color)] px-4 py-0.5 rounded-md"><span className="font-semibold mr-3">+</span>Add New</button>
                 </div>
@@ -179,10 +180,10 @@ const GoalDetail: FC = (): JSX.Element => {
             </div>
           </div>
         }
-      {
-        goal.Todos.length === 0 &&
-        <EmptyList listName="todo" setIsAddTodo={setIsAddTodo} />
-      }
+        {
+          goal.Todos.length === 0 &&
+          <EmptyList listName="todo" setIsAddTodo={setIsAddTodo} />
+        }
       </div>
       {isAddTodo && <AddTodo setIsAddTodo={setIsAddTodo} GoalId={goal.id} setGoal={setGoal} setGoals={setGoals} />}
       {isAddAiTodo && <AddAiTodos setIsAddAiTodo={setIsAddAiTodo} goal={goal} setGoal={setGoal} setGoals={setGoals} />}

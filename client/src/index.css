@@ -28,7 +28,6 @@ body, html {
   margin: 0;
   padding: 0;
   display: flex;
-  /* min-width: 320px; */
   min-height: 100vh;
 }
 
@@ -36,8 +35,6 @@ html, body {
   width: 100%;
   box-sizing: border-box;
 }
-
-
 
 #root {
 	padding: 0;
@@ -78,12 +75,12 @@ progress[value]::-webkit-progress-value {
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px; /* Adjust width as needed */
-  height: 8px; /* Adjust height as needed */
+  width: 8px;
+  height: 8px;
   border-radius: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(93, 93, 233, 0.5); /* Adjust color as needed */
+  background-color: rgba(93, 93, 233, 0.5);
   border-radius: 4px;
 }

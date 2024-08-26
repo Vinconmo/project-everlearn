@@ -1,5 +1,5 @@
 "use strict";
-import { Todo, Goal, TodoPlanRequestType } from "./Types";
+import { Todo, Goal, AiTodoRequest } from "./types/DataTypes";
 
 // fetch factory
 function baseFetch<T>(path: string, options: RequestInit): Promise<T | void> {
@@ -21,7 +21,7 @@ export const getGoals = (): Promise<Goal[] | void> =>
     method: "GET",
   });
 
-export const getGoalById = (goalId: number): Promise<Goal |void> =>
+export const getGoalById = (goalId: number): Promise<Goal | void> =>
   baseFetch(`goal/${goalId}`, {
     method: "GET",
   });
@@ -63,7 +63,7 @@ export const deleteTodo = (todo: Todo): Promise<Todo | void> =>
 
 // use ai route from backend
 export const generateTodos = (
-  planDetails: TodoPlanRequestType,
+  planDetails: AiTodoRequest,
   goalId: number | undefined
 ): Promise<Todo[] | void> =>
   baseFetch(`goal/${goalId}/ai`, {

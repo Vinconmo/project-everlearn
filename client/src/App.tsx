@@ -1,9 +1,9 @@
 import {FC} from 'react'
 import './App.css'
-import Navbar from './components/Navbar'
-import Dashboard from './components/Dashboard'
+import Navbar from './layouts/Navbar'
+import Dashboard from './pages/Dashboard'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import GoalDetail from './components/GoalDetail'
+import GoalDetail from './pages/GoalDetail'
 
 const router = createBrowserRouter([
   {

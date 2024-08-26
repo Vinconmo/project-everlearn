@@ -1,11 +1,13 @@
 import {FC} from "react";
-import {AppContext, Goal} from "../Types";
-import GoalCard from "./GoalCard";
-import EmptyList from "./EmptyList";
+import {AppContext} from "../types/PropTypes";
+import GoalCard from "../components/GoalCard";
+import EmptyList from "../components/EmptyList";
 import {useOutletContext} from "react-router-dom";
+import {Goal} from "../types/DataTypes";
 
 const Dashboard: FC = (): JSX.Element => {
   const {goals, setGoals, setIsAddGoal, completedGoals, openGoals} = useOutletContext() as AppContext
+
   // list factory for goal cards
   function createGoalList (goals: Goal[]): JSX.Element[] {
     const sortedGoals = goals.sort((a: Goal, b: Goal) => Date.parse(a.dueDate.toString()) - Date.parse(b.dueDate.toString()))
@@ -27,24 +29,23 @@ const Dashboard: FC = (): JSX.Element => {
           <h1>Welcome back, Vincent! 👋</h1>
           <button onClick={handleBtnClick} className="ml-auto bg-[color:var(--highlight-light-color)] px-4 py-0.5 rounded-md"><span className="font-semibold mr-3">+</span>New</button>
         </div>
-
         <div className={`flex flex-col flex-wrap items-start px-10 ${openGoals.length > 0 ? 'gap-y-8' : 'gap-y-0'}`}>
           {
             openGoals.length > 0 &&
             <div className="flex flex-col flex-wrap">
-                <h2 className="text-left">Active goals 🎯</h2>
-                <div className="flex items-stretch gap-5 my-5 flex-wrap">
-                  {
-                    createGoalList(openGoals)
-                  }
-                </div>
+              <h2 className="text-left">Active goals 🎯</h2>
+              <div className="flex items-stretch gap-5 my-5 flex-wrap">
+                {
+                  createGoalList(openGoals)
+                }
+              </div>
             </div>
           }
           {
             completedGoals.length > 0 &&
             <div className="flex flex-col">
-                <h2 className="text-left">Completed goals 💪</h2>
-                <div className="flex items-stretch gap-5 my-5 flex-wrap">
+              <h2 className="text-left">Completed goals 💪</h2>
+              <div className="flex items-stretch gap-5 my-5 flex-wrap">
                 {
                   createGoalList(completedGoals)
                 }
@@ -54,12 +55,9 @@ const Dashboard: FC = (): JSX.Element => {
         </div>
         {
           goals.length === 0 &&
-          <EmptyList listName="goal" setIsAddGoal={setIsAddGoal}/>
+          <EmptyList listName="goal" setIsAddGoal={setIsAddGoal} />
         }
-
       </div>
-
-
     </>
   );
 }

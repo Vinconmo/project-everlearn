@@ -1,42 +1,28 @@
-import {ChangeEvent, FC, FormEvent, useState, Dispatch, SetStateAction} from "react";
+import {ChangeEvent, FC, FormEvent, useState} from "react";
 import {postTodo} from "../ApiServices";
 import {IconContext} from "react-icons";
 import {IoCloseOutline} from "react-icons/io5";
-import {Goal, Todo} from "../Types";
+import {Goal, Todo, TodoForm} from "../types/DataTypes";
+import {getFormFormat} from "../utils/utils";
+import {PropsAddTodo} from "../types/PropTypes";
 
-interface props {
-  setIsAddTodo: Dispatch<SetStateAction<boolean>>,
-  setGoal: Dispatch<SetStateAction<Goal>>,
-  setGoals: Dispatch<SetStateAction<Goal[]>>,
-  GoalId: number | undefined,
-}
 
-interface TodoData {
-  titleTodo: string,
-  dueDateTodo: string,
-  resource: string,
-  comments: string,
-  GoalId: number | undefined,
-}
 
-const AddTodo: FC<props> = ({setIsAddTodo, GoalId, setGoal, setGoals}): JSX.Element => {
-  // placeholder for HTML Date Input
-  const now = new Date();
-  now.setMonth(now.getMonth() + 2, 0);
-  const thisYear = now.getFullYear();
-  const nextMonth = now.getMonth() + 1;
-  const day = now.getDate();
-  const placeholder = getDateFormHtmlInput(thisYear, nextMonth, day);
 
-  function getDateFormHtmlInput (year: number, month: number, day: number): string {
-    return `${year}-${month < 10 ? 0 : ''}${month}-${day}`
-  }
+// placeholder for HTML Date Input
+const now = new Date();
+now.setMonth(now.getMonth() + 2, 0);
+const thisYear = now.getFullYear();
+const nextMonth = now.getMonth() + 1;
+const day = now.getDate();
+const placeholder = getFormFormat(thisYear, nextMonth, day);
 
+const AddTodo: FC<PropsAddTodo> = ({setIsAddTodo, GoalId, setGoal, setGoals}): JSX.Element => {
   const initialTodoData = {titleTodo: '', dueDateTodo: placeholder, resource: '', comments: '', GoalId}
-  const [todoData, setTodoData] = useState<TodoData>(initialTodoData)
+  const [todoData, setTodoData] = useState<TodoForm>(initialTodoData)
 
   function handleFormChange (event: ChangeEvent) {
-    setTodoData((prev: TodoData) => ({
+    setTodoData((prev: TodoForm) => ({
       ...prev,
       [(event.target as HTMLInputElement).name]: (event.target as HTMLInputElement).value,
     }))

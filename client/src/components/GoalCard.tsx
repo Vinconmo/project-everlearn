@@ -1,5 +1,5 @@
-import {FC, MouseEvent, Dispatch, SetStateAction} from "react";
-import {Goal, Todo} from "../Types";
+import {FC, MouseEvent} from "react";
+import {Goal, Todo} from "../types/DataTypes";
 import {BsThreeDots} from "react-icons/bs";
 import {MdDeleteOutline} from "react-icons/md";
 import {IconContext} from "react-icons";
@@ -7,13 +7,9 @@ import {formatDate} from "../utils/utils";
 import {useNavigate} from "react-router-dom";
 import {deleteGoal} from "../ApiServices";
 import {Card, CardContent} from '@mui/material';
+import {PropsGoalCard} from "../types/PropTypes";
 
-interface props {
-  goal: Goal
-  setGoals: Dispatch<SetStateAction<Goal[]>>,
-}
-
-const GoalCard: FC<props> = ({goal, setGoals}): JSX.Element => {
+const GoalCard: FC<PropsGoalCard> = ({goal, setGoals}): JSX.Element => {
   const navigate = useNavigate();
 
   async function handleDelete (e: MouseEvent<HTMLButtonElement>) {
@@ -44,15 +40,15 @@ const GoalCard: FC<props> = ({goal, setGoals}): JSX.Element => {
       {
         goal.isCompleted &&
         <a onClick={() => navigate(`/goal/${goal.id}`)} className="cursor-pointer min-w-80">
-            <Card classes={{root: "relative px-2 text-left opacity-70"}}>
+          <Card classes={{root: "relative px-2 text-left opacity-70"}}>
             <CardContent>
-                <h3 className="font-semibold text-gray-500">
+              <h3 className="font-semibold text-gray-500">
                 <span className="text-gray-400 text-xs font-medium">Goal</span><br />
                 {goal.title}
               </h3>
               <p className="relative top-2.5 text-gray-400 text-xs">{`${completedTodos.length} / ${todosNum}`}</p>
               <progress value={progress} max="1" className="w-full my-3"></progress>
-                <div className="flex flex-col text-left text-xs font-medium text-gray-500 gap-y-3">
+              <div className="flex flex-col text-left text-xs font-medium text-gray-500 gap-y-3">
                 <p>
                   <span className="text-gray-400 text-xs">Completed</span><br />
                   {formatDate(goal.updatedAt)}
@@ -72,7 +68,7 @@ const GoalCard: FC<props> = ({goal, setGoals}): JSX.Element => {
         <a onClick={() => navigate(`/goal/${goal.id}`)} className="cursor-pointer min-w-80 w-[45%]">
           <Card classes={{root: "relative px-2 text-left h-full"}}>
             <CardContent>
-                <h3 className="font-semibold">
+              <h3 className="font-semibold">
                 <span className="text-gray-400 text-xs font-medium">Goal</span><br />
                 {goal.title}
               </h3>

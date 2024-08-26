@@ -1,5 +1,3 @@
-import {Dispatch, SetStateAction} from "react";
-
 export interface Todo {
   id?: number,
   titleTodo: string,
@@ -19,10 +17,16 @@ export interface Goal {
   isCompleted?: boolean,
   createdAt?: Date,
   updatedAt?: Date,
-  Todos: Todo[] | [],
+  Todos: Todo[],
 }
 
-export interface TodoPlanRequestType {
+export interface GoalForm {
+  title: string;
+  dueDate: string;
+  Todos: Todo[];
+}
+
+export interface AiTodoRequest {
   learningGoal: string;
   experienceLevel: string;
   existingKnowledge: string;
@@ -35,11 +39,22 @@ export interface TodoPlanRequestType {
   preferredLearningDays: string;
 }
 
-export interface AppContext {
-  goals: Goal[];
-  setGoals: Dispatch<SetStateAction<Goal[]>>;
-  isAddGoal: boolean;
-  setIsAddGoal: Dispatch<SetStateAction<boolean>>;
-  completedGoals: Goal[];
-  openGoals: Goal[];
+export interface AiTodoForm {
+  learningGoalDesc: string;
+  experienceLevel: string;
+  existingKnowledge: string;
+  startDate: string;
+  frequency: string;
+  frequencyUnit: string;
+  preferredFormats: string;
+  todoUnitTime: string;
+  preferredLearningDays: string[];
+}
+
+export interface TodoForm {
+  titleTodo: string;
+  dueDateTodo: string;
+  resource: string;
+  comments: string;
+  GoalId: number | undefined;
 }

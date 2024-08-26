@@ -1,13 +1,7 @@
-import {FC, Dispatch, SetStateAction} from "react";
+import {FC} from "react";
+import {PropsEmptyList} from "../types/PropTypes";
 
-interface props {
-  listName: string,
-  setIsAddGoal?: Dispatch<SetStateAction<boolean>>,
-  setIsAddTodo?: Dispatch<SetStateAction<boolean>>,
-}
-
-const EmptyList: FC<props> = ({listName, setIsAddGoal, setIsAddTodo}): JSX.Element => {
-
+const EmptyList: FC<PropsEmptyList> = ({listName, setIsAddGoal, setIsAddTodo}): JSX.Element => {
   const handleClick = (): void => {
     switch (listName) {
       case "goal":
