@@ -5,7 +5,7 @@ const Sequelize = require('sequelize');
 const {readdir} = require('node:fs/promises')
 const {join} = require('node:path');
 
-const modelDir = 'model';
+const modelDir = "model";
 
 const dbConfig = {
   name: "everlearn",
@@ -16,12 +16,14 @@ const dbConfig = {
   dialect: "postgres",
   logging: false,
 };
+
 const sequelize = new Sequelize(
   dbConfig.name,
   dbConfig.username,
   dbConfig.password,
   dbConfig
 );
+
 const db = {};
 
 // add all tables (model files) to db

@@ -41,6 +41,8 @@ app.use(cors(corsConfig))
 
 (async () => {
   await db.sequelize.sync();
-  console.log('💾 Database along with all models connected')
-  app.listen(SERVER_PORT, () => console.log(`🚀 Server running on port ${SERVER_PORT}`));
-})()
+  console.log("💾 Database along with all models connected");
+  app.listen(SERVER_PORT, () =>
+    console.log(`🚀 Server running on port ${SERVER_PORT}`)
+  );
+})();
