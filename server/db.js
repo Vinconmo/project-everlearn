@@ -8,21 +8,23 @@ const {join} = require('node:path');
 const modelDir = "model";
 
 const dbConfig = {
-  name: "everlearn",
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST || "localhost",
-  port: process.env.DB_PORT || 5432,
+  // name: "everlearn",
+  // username: process.env.DB_USERNAME,
+  // password: process.env.DB_PASSWORD,
+  // host: process.env.DB_HOST || "localhost",
+  // port: process.env.DB_PORT || 5432,
   dialect: "postgres",
   logging: false,
 };
 
-const sequelize = new Sequelize(
-  dbConfig.name,
-  dbConfig.username,
-  dbConfig.password,
-  dbConfig
-);
+// const sequelize = new Sequelize(
+//   dbConfig.name,
+//   dbConfig.username,
+//   dbConfig.password,
+//   dbConfig
+// );
+
+const sequelize = new Sequelize(process.env.DATABASE_URL)
 
 const db = {};
 

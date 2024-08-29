@@ -3,7 +3,7 @@
 const Koa = require('koa');
 const cors = require('@koa/cors');
 const bodyParser = require('koa-bodyparser');
-const db = require('./db');
+const db = require('./models/index');
 const router = require('./router');
 const app = new Koa();
 require('dotenv').config();
@@ -40,7 +40,15 @@ app.use(cors(corsConfig))
   .use(router.routes());
 
 (async () => {
-  await db.sequelize.sync();
+  console.log('----------->>>> TRY STARTING APP UP')
+  console.log(process.env.DATABASE_URL)
+  try {
+    await db.sequelize.authenticate();
+    console.log("Connected to the database!");
+  } catch (err) {
+    console.error("Error connecting to the database:", err);
+  }
+  // await db.sequelize.sync();
   console.log("💾 Database along with all models connected");
   app.listen(SERVER_PORT, () =>
     console.log(`🚀 Server running on port ${SERVER_PORT}`)
