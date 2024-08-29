@@ -1,5 +1,5 @@
-// import dotenv from "dotenv";
-// dotenv.config();
+import dotenv from "dotenv";
+dotenv.config();
 
 export let SERVER_URL: string | undefined, ENV: string;
 
