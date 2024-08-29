@@ -12,7 +12,7 @@ switch (import.meta.env.MODE) {
     break;
   case "production":
     // server url
-    SERVER_URL = import.meta.env.VITE_SERVER_DEPLOY;
+    SERVER_URL = process.env.VITE_SERVER_DEPLOY;
     // environment
     ENV = "production";
     break;
