@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-dotenv.config();
+// import dotenv from "dotenv";
+// dotenv.config();
 
 export let SERVER_URL: string | undefined, ENV: string;
 
@@ -12,7 +12,7 @@ switch (import.meta.env.MODE) {
     break;
   case "production":
     // server url
-    SERVER_URL = process.env.VITE_SERVER_DEPLOY;
+    SERVER_URL = import.meta.env.VITE_SERVER_DEPLOY || "https://server-icy-tree-1124.fly.dev";
     // environment
     ENV = "production";
     break;
