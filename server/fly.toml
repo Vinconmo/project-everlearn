@@ -9,7 +9,6 @@ primary_region = 'ams'
 [build]
 
 [env]
-  # VITE_GEMINI_API_KEY="AIzaSyDoivitaoaBQYWvFfUQaNQhGt7Ttee38Jk"
   DATABASE_URL="postgres://server_icy_tree_1124:buyLalOYXFufjta@server-icy-tree-1124-db.flycast:5432/server_icy_tree_1124?sslmode=disable"
   VITE_SERVER_PORT="3000"
   VITE_SERVER_DEPLOY="https://server-icy-tree-1124.fly.dev"
