@@ -15,7 +15,7 @@ const CLIENT_PORT = process.env.CLIENT_PORT || 5173;
 const validOrigins = [
   `http://localhost:${CLIENT_PORT}`,
   `http://127.0.0.1:${CLIENT_PORT}`,
-  'https://server-icy-tree-1124.fly.dev/'
+  'https://server-icy-tree-1124.fly.dev'
 ]
 
 // Origin verification generator
@@ -36,7 +36,7 @@ const corsConfig = {
 };
 
 // Configure Koa to use kcors module with origin verification
-app.use(cors(corsConfig))
+app.use(cors(/* corsConfig */))
   .use(bodyParser())
   .use(router.routes());
 
