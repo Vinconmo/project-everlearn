@@ -8,7 +8,7 @@ const router = require("./router");
 const app = new Koa();
 const config = require("./config.js");
 
-const validOrigins = [...config.CLIENT_URLS];
+const validOrigins = [...config.CLIENT_URLS, "https://main--gleeful-cranachan-4fd23d.netlify.app"];
 
 // Origin verification generator
 function verifyOrigin(ctx) {
@@ -33,6 +33,7 @@ app.use(cors(corsConfig)).use(bodyParser()).use(router.routes());
 (async () => {
   console.log("⏳ Starting the server");
   console.log("🐳 Environment: ", config.ENV);
+  console.log(config.CLIENT_URLS)
   try {
     await db.sequelize.authenticate();
     console.log("💾 Connected to the database!");
