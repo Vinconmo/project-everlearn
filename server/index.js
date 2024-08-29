@@ -6,7 +6,7 @@ const bodyParser = require("koa-bodyparser");
 const db = require("./db");
 const router = require("./router");
 const app = new Koa();
-const config = require("../config.js");
+const config = require("./config.js");
 
 const validOrigins = [...config.CLIENT_URLS];
 
@@ -42,6 +42,8 @@ app.use(cors(corsConfig)).use(bodyParser()).use(router.routes());
   await db.sequelize.sync();
   console.log("💾 Database synced with all models");
   app.listen(config.SERVER_PORT, () =>
-    console.log(`🚀 Server running on ${config.SERVER_URL}, ${config.SERVER_PORT}`)
+    console.log(
+      `🚀 Server running on ${config.SERVER_URL}, ${config.SERVER_PORT}`
+    )
   );
 })();

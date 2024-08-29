@@ -28,7 +28,8 @@ switch (process.env.NODE_ENV) {
     // DB connection
     DB_URI = process.env.DATABASE_URL;
     // server url
-    SERVER_URL = process.env.VITE_CLIENT_DEPLOY;
+    SERVER_URL = process.env.CLIENT_DEPLOY;
+    SERVER_PORT = process.env.VITE_SERVER_PORT || 3000;
     // client url
     CLIENT_URLS = [process.env.CLIENT_DEPLOY, process.env.CLIENT_PREVIEW];
     // environment
