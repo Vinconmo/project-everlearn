@@ -1,30 +1,20 @@
 'use strict';
 
-require("dotenv").config();
 const Sequelize = require('sequelize');
 const {readdir} = require('node:fs/promises')
 const {join} = require('node:path');
+const config = require('../config')
 
 const modelDir = "models";
 
 const dbConfig = {
-  // name: "everlearn",
-  // username: process.env.DB_USERNAME,
-  // password: process.env.DB_PASSWORD,
-  // host: process.env.DB_HOST || "localhost",
-  // port: process.env.DB_PORT || 5432,
-  dialect: "postgres",
   logging: false,
 };
 
-// const sequelize = new Sequelize(
-//   dbConfig.name,
-//   dbConfig.username,
-//   dbConfig.password,
-//   dbConfig
-// );
-
-const sequelize = new Sequelize(process.env.DATABASE_URL)
+const sequelize = new Sequelize(
+  config.DB_URI,
+  dbConfig
+);
 
 const db = {};
 

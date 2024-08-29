@@ -1,9 +1,13 @@
 "use strict";
-import { Todo, Goal, AiTodoRequest } from "./types/DataTypes";
+import {Todo, Goal, AiTodoRequest} from "./types/DataTypes";
+import {SERVER_URL} from './config'
+
 
 // fetch factory
 function baseFetch<T>(path: string, options: RequestInit): Promise<T | void> {
-  const baseURL = "https://server-icy-tree-1124.fly.dev";
+  const baseURL = SERVER_URL;
+  // console.log(baseURL)
+  // console.log(SERVER_URL, import.meta.env);
   return fetch(`${baseURL}/${path}`, {
     mode: "cors",
     headers: {

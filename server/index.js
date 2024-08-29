@@ -1,34 +1,26 @@
-'use strict';
+"use strict";
 
-const Koa = require('koa');
-const cors = require('@koa/cors');
-const bodyParser = require('koa-bodyparser');
-const db = require('./db');
-const router = require('./router');
+const Koa = require("koa");
+const cors = require("@koa/cors");
+const bodyParser = require("koa-bodyparser");
+const db = require("./db");
+const router = require("./router");
 const app = new Koa();
-require('dotenv').config();
+const config = require("../config.js");
 
-
-const SERVER_PORT = process.env.SERVER_PORT || 3000;
-const CLIENT_PORT = process.env.CLIENT_PORT || 5173;
-
-const validOrigins = [
-  `http://localhost:${CLIENT_PORT}`,
-  `http://127.0.0.1:${CLIENT_PORT}`,
-  'https://server-icy-tree-1124.fly.dev'
-]
+const validOrigins = [...config.CLIENT_URLS];
 
 // Origin verification generator
-function verifyOrigin (ctx) {
-    // Get requesting origin hostname
-    const origin = ctx.headers.origin;
+function verifyOrigin(ctx) {
+  // Get requesting origin hostname
+  const origin = ctx.headers.origin;
 
-    // Make sure it's a valid origin
-    if (validOrigins.indexOf(origin) != -1) {
-       // Set the header to the requested origin
-      ctx.set('Access-Control-Allow-Origin', origin);
-      return origin
-    }
+  // Make sure it's a valid origin
+  if (validOrigins.indexOf(origin) != -1) {
+    // Set the header to the requested origin
+    ctx.set("Access-Control-Allow-Origin", origin);
+    return origin;
+  }
 }
 
 const corsConfig = {
@@ -36,22 +28,20 @@ const corsConfig = {
 };
 
 // Configure Koa to use kcors module with origin verification
-app.use(cors(/* corsConfig */))
-  .use(bodyParser())
-  .use(router.routes());
+app.use(cors(corsConfig)).use(bodyParser()).use(router.routes());
 
 (async () => {
-  console.log('----------->>>> TRY STARTING APP UP')
-  console.log(process.env.DATABASE_URL)
+  console.log("⏳ Starting the server");
+  console.log("🐳 Environment: ", config.ENV);
   try {
     await db.sequelize.authenticate();
-    console.log("Connected to the database!");
+    console.log("💾 Connected to the database!");
   } catch (err) {
-    console.error("Error connecting to the database:", err);
+    console.error("❌ Error connecting to the database:", err);
   }
   await db.sequelize.sync();
-  console.log("💾 Database along with all models connected");
-  app.listen(SERVER_PORT, () =>
-    console.log(`🚀 Server running on port ${SERVER_PORT}`)
+  console.log("💾 Database synced with all models");
+  app.listen(config.SERVER_PORT, () =>
+    console.log(`🚀 Server running on ${config.SERVER_URL}, ${config.SERVER_PORT}`)
   );
 })();
