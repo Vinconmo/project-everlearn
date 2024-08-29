@@ -5,7 +5,7 @@ const Sequelize = require('sequelize');
 const {readdir} = require('node:fs/promises')
 const {join} = require('node:path');
 
-const modelDir = "model";
+const modelDir = "models";
 
 const dbConfig = {
   // name: "everlearn",

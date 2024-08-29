@@ -1,7 +1,7 @@
 "use strict";
 
 const { model } = require("../models/gemini");
-const db = require("../models/index");
+const db = require("../db");
 
 const generateTodos = async (ctx) => {
   try {

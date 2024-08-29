@@ -1,6 +1,6 @@
 'use strict';
 
-const db = require('../models/index');
+const db = require('../db');
 
 const getAll = async (ctx) => {
   try {

@@ -3,7 +3,7 @@
 const Koa = require('koa');
 const cors = require('@koa/cors');
 const bodyParser = require('koa-bodyparser');
-const db = require('./models/index');
+const db = require('./db');
 const router = require('./router');
 const app = new Koa();
 require('dotenv').config();
@@ -14,7 +14,8 @@ const CLIENT_PORT = process.env.CLIENT_PORT || 5173;
 
 const validOrigins = [
   `http://localhost:${CLIENT_PORT}`,
-  `http://127.0.0.1:${CLIENT_PORT}`
+  `http://127.0.0.1:${CLIENT_PORT}`,
+  'https://server-icy-tree-1124.fly.dev/'
 ]
 
 // Origin verification generator
@@ -48,7 +49,7 @@ app.use(cors(corsConfig))
   } catch (err) {
     console.error("Error connecting to the database:", err);
   }
-  // await db.sequelize.sync();
+  await db.sequelize.sync();
   console.log("💾 Database along with all models connected");
   app.listen(SERVER_PORT, () =>
     console.log(`🚀 Server running on port ${SERVER_PORT}`)

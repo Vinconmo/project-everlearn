@@ -3,7 +3,7 @@ import { Todo, Goal, AiTodoRequest } from "./types/DataTypes";
 
 // fetch factory
 function baseFetch<T>(path: string, options: RequestInit): Promise<T | void> {
-  const baseURL = "http://localhost:3001";
+  const baseURL = "https://server-icy-tree-1124.fly.dev";
   return fetch(`${baseURL}/${path}`, {
     mode: "cors",
     headers: {
