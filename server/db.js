@@ -11,7 +11,10 @@ const dbConfig = {
   logging: false,
 };
 
-const sequelize = new Sequelize(config.DB_URI, dbConfig);
+const sequelize = new Sequelize(
+  config.DB_URI,
+  dbConfig
+);
 
 const db = {};
 

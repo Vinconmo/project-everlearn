@@ -37,10 +37,13 @@ switch (process.env.NODE_ENV) {
     break;
 }
 
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY
+
 module.exports = {
   DB_URI,
   CLIENT_URLS,
   SERVER_URL,
   ENV,
-  SERVER_PORT
+  SERVER_PORT,
+  GEMINI_API_KEY
 };

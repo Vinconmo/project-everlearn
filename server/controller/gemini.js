@@ -57,11 +57,10 @@ const generateTodos = async (ctx) => {
     `;
 
     const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const text = result.response.text();
     const parsedPlan = extractResponseCode(text);
     const updatedPlan = [];
-    for (todo of parsedPlan) {
+    for (let todo of parsedPlan) {
       const resTodo = await postTodo(todo, goalId);
       updatedPlan.push(resTodo);
     }
